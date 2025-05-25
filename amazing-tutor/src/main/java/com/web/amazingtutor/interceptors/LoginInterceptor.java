@@ -24,7 +24,10 @@ public class LoginInterceptor implements HandlerInterceptor {
             return true;
         }
 
+        System.out.println("Method: " + request.getMethod() + " Path: " + request.getRequestURI());
+
         System.out.println(token);
+
 
         try {
             Map<String, Object> claims = JwtUtil.parseToken(token);
