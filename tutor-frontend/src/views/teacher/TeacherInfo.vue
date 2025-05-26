@@ -96,3 +96,18 @@ const modifyUserInfo = async()=>{
         </el-row>
     </el-card>
 </template>
+
+<style>
+
+.page-container {
+    min-height: 100%;
+    box-sizing: border-box;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+</style>

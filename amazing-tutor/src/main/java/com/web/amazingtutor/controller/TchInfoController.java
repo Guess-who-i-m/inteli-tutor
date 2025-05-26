@@ -109,6 +109,13 @@ public class TchInfoController {
         queryWrapper.eq("tch_id", map.get("id"));
         TchInfo res = tchInfoService.getOne(queryWrapper);
 
+        if (res == null){
+            TchInfo tchInfo = new TchInfo();
+            tchInfo.setTchId((Integer) map.get("id"));
+            tchInfoService.save(tchInfo);
+            res = tchInfoService.getOne(queryWrapper);
+        }
+
         // 将查询结果返回
         return R.success(res);
     }

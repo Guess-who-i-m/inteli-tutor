@@ -111,4 +111,16 @@ const updateAvatar = async()=>{
         }
     }
 }
+
+.page-container {
+    min-height: 100%;
+    box-sizing: border-box;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
 </style>

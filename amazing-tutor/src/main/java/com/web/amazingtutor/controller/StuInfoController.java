@@ -108,6 +108,13 @@ public class StuInfoController {
         queryWrapper.eq("stu_id", map.get("id"));
         StuInfo res = stuInfoService.getOne(queryWrapper);
 
+        if (res == null){
+            StuInfo stuInfo = new StuInfo();
+            stuInfo.setStuId((Integer) map.get("id"));
+            stuInfoService.save(stuInfo);
+            res = stuInfoService.getOne(queryWrapper);
+        }
+
         // 将查询结果返回
         return R.success(res);
     }
