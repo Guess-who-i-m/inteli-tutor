@@ -50,8 +50,10 @@ instance.interceptors.response.use(
             return result.data;
         }
         
+        console.log(result.data.message)
+
         // 业务失败，显示错误消息
-        ElMessage.error(result.data.message ? result.data.message : '服务异常');
+        ElMessage.error(result.data.msg ? result.data.msg : '服务异常');
         
         // 返回拒绝的Promise，触发catch处理
         return Promise.reject(result.data);
