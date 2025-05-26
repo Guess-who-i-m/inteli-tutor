@@ -182,10 +182,6 @@ import { ElMessage } from 'element-plus'
 const handlePriceInput = (value) => {
     recommendModel.value.price = value ? parseInt(value) || 0 : null;
 }
-// 确保online为布尔值
-const handleOnlineChange = (value) => {
-    recommendModel.value.online = Boolean(value);
-}
 
 // 处理时间组数量变化
 const handleTimeNumChange = (newVal) => {
@@ -318,8 +314,8 @@ const addRecommend = async() => {
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="articleList">搜索</el-button>
-                <el-button @click="categoryId = ''; state = ''; articleList()">重置</el-button>
+                <el-button type="primary" @click="recommendList">搜索</el-button>
+                <el-button @click="subject = ''; online = ''; recommendList()">重置</el-button>
             </el-form-item>
         </el-form>
 
@@ -377,8 +373,7 @@ const addRecommend = async() => {
             <el-form-item label="辅导形式">
                 <el-select 
                     placeholder="请选择" 
-                    v-model="recommendModel.online"
-                    @change="handleOnlineChange">
+                    v-model="recommendModel.online">
                     <el-option label="线上" value="true"></el-option>
                     <el-option label="线下" value="false"></el-option>
                 </el-select>

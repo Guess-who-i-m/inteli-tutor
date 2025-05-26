@@ -52,7 +52,7 @@ const onCurrentChange = (num) => {
 
 import { recruitListService } from '@/api/recruit'
 
-// 异步获取推荐列表数据并处理
+// 异步获取招聘列表数据并处理
 const recruitList = async () => {
     // 准备请求参数：当前页码和每页数量（从Vue响应式变量获取）
     let params = {
@@ -63,7 +63,7 @@ const recruitList = async () => {
         // 可选的线上/线下过滤条件（示例中被注释） 
         // online: online.value ? online.value : null,
     }
-    // 调用推荐列表服务获取数据
+    // 调用招聘列表服务获取数据
     let result = await recruitListService(params);
     // 数据处理流程
     if (result.data && result.data.items) {
@@ -90,7 +90,7 @@ const recruitList = async () => {
 
         // 转换数据结构：将后端数据转换为前端需要的格式
         recruits.value = result.data.items.map(item => {
-            // 基础数据：从推荐主体数据中提取
+            // 基础数据：从招聘主体数据中提取
             const recruitData = item.recruit;
             
             // 处理时间数据 ------------------------------------------------------
@@ -132,11 +132,11 @@ const recruitList = async () => {
         });
         
         // 调试输出：在控制台显示转换后的数据结构
-        console.log("转换后的推荐数据:", recruits.value);
+        console.log("转换后的招聘数据:", recruits.value);
     } else {
         // 异常处理：数据缺失时清空列表
         total.value = 0;            // 重置总条数
-        recruits.value = [];      // 清空推荐列表
+        recruits.value = [];      // 清空招聘列表
         console.error("数据获取或处理失败:", result);  // 输出错误日志
     }
 };
@@ -169,10 +169,6 @@ import { ElMessage } from 'element-plus'
 // 处理价格输入，确保为整数
 const handlePriceInput = (value) => {
     recruitModel.value.price = value ? parseInt(value) || 0 : null;
-}
-// 确保online为布尔值
-const handleOnlineChange = (value) => {
-    recruitModel.value.online = Boolean(value);
 }
 
 // 处理时间组数量变化
@@ -307,8 +303,8 @@ const addRecruit = async() => {
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="articleList">搜索</el-button>
-                <el-button @click="categoryId = ''; state = ''; articleList()">重置</el-button>
+                <el-button type="primary" @click="recruitList">搜索</el-button>
+                <el-button @click="subject = ''; online = ''; recruitList()">重置</el-button>
             </el-form-item>
         </el-form>
 
@@ -370,8 +366,7 @@ const addRecruit = async() => {
             <el-form-item label="辅导形式">
                 <el-select 
                     placeholder="请选择" 
-                    v-model="recruitModel.online"
-                    @change="handleOnlineChange">
+                    v-model="recruitModel.online">
                     <el-option label="线上" value="true"></el-option>
                     <el-option label="线下" value="false"></el-option>
                 </el-select>
