@@ -1,75 +1,59 @@
 <script setup>
+
+// 目前没来得及做
+// 删除按钮
+// 条件筛选
+// 修改按钮
+// 显示detail
+
 import {
     Edit,
-    Delete
+    Delete,
+    Message
 } from '@element-plus/icons-vue'
 
 import { ref } from 'vue'
 
+// 用户设置列表筛选条件时的科目
+const subject = ref('')
 
-//文章分类数据模型
-const categorys = ref([
+// 用户搜索时选中的线上或线下
+const online = ref('')
+
+
+const recommends = ref([
     {
-        "id": 3,
-        "categoryName": "美食",
-        "categoryAlias": "my",
-        "createTime": "2023-09-02 12:06:59",
-        "updateTime": "2023-09-02 12:06:59"
+        "recommendId": 1,
+        "subject": "语文",
+        "online": "线上",
+        "price": "100",
+        "time": "星期一 19:00-21:00, 星期三 20:00-22:00",
+        "detail":"这是一则有关描述"
     },
     {
-        "id": 4,
-        "categoryName": "娱乐",
-        "categoryAlias": "yl",
-        "createTime": "2023-09-02 12:08:16",
-        "updateTime": "2023-09-02 12:08:16"
+        "recommendId": 1,
+        "subject": "语文",
+        "online": "线上",
+        "price": "100",
+        "time": "星期一 19:00-21:00, 星期三 20:00-22:00",
+        "detail":"这是一则有关描述"
     },
     {
-        "id": 5,
-        "categoryName": "军事",
-        "categoryAlias": "js",
-        "createTime": "2023-09-02 12:08:33",
-        "updateTime": "2023-09-02 12:08:33"
+        "recommendId": 1,
+        "subject": "语文",
+        "online": "线上",
+        "price": "100",
+        "time": "星期一 19:00-21:00, 星期三 20:00-22:00",
+        "detail":"这是一则有关描述"
+    },
+    {
+        "recommendId": 1,
+        "subject": "语文",
+        "online": "线上",
+        "price": "100",
+        "time": "星期一 19:00-21:00, 星期三 20:00-22:00",
+        "detail":"这是一则有关描述"
     }
-])
-
-//用户搜索时选中的分类id
-const categoryId = ref('')
-
-//用户搜索时选中的发布状态
-const state = ref('')
-
-//文章列表数据模型
-const articles = ref([
-    {
-        "id": 5,
-        "title": "陕西旅游攻略",
-        "content": "兵马俑,华清池,法门寺,华山...爱去哪去哪...",
-        "coverImg": "https://big-event-gwd.oss-cn-beijing.aliyuncs.com/9bf1cf5b-1420-4c1b-91ad-e0f4631cbed4.png",
-        "state": "草稿",
-        "categoryId": 2,
-        "createTime": "2023-09-03 11:55:30",
-        "updateTime": "2023-09-03 11:55:30"
-    },
-    {
-        "id": 5,
-        "title": "陕西旅游攻略",
-        "content": "兵马俑,华清池,法门寺,华山...爱去哪去哪...",
-        "coverImg": "https://big-event-gwd.oss-cn-beijing.aliyuncs.com/9bf1cf5b-1420-4c1b-91ad-e0f4631cbed4.png",
-        "state": "草稿",
-        "categoryId": 2,
-        "createTime": "2023-09-03 11:55:30",
-        "updateTime": "2023-09-03 11:55:30"
-    },
-    {
-        "id": 5,
-        "title": "陕西旅游攻略",
-        "content": "兵马俑,华清池,法门寺,华山...爱去哪去哪...",
-        "coverImg": "https://big-event-gwd.oss-cn-beijing.aliyuncs.com/9bf1cf5b-1420-4c1b-91ad-e0f4631cbed4.png",
-        "state": "草稿",
-        "categoryId": 2,
-        "createTime": "2023-09-03 11:55:30",
-        "updateTime": "2023-09-03 11:55:30"
-    },
 ])
 
 //分页条数据模型
@@ -80,54 +64,100 @@ const pageSize = ref(3)//每页条数
 //当每页条数发生了变化，调用此函数
 const onSizeChange = (size) => {
     pageSize.value = size
-    articleList()
+    recommendList();
 }
 //当前页码发生变化，调用此函数
 const onCurrentChange = (num) => {
     pageNum.value = num
-    articleList()
+    recommendList();
 }
 
-// 回显文章分类
-import { articleCategoryListService, articleListService } from '@/api/article'
 
-const articleCategoryList = async () => {
-    let result = await articleCategoryListService();
 
-    categorys.value = result.data
-}
+import { recommendListService} from '@/api/recommend'
 
-articleCategoryList()
-
-// 获取文章列表函数
-const articleList = async () => {
+// 异步获取推荐列表数据并处理
+const recommendList = async () => {
+    // 准备请求参数：当前页码和每页数量（从Vue响应式变量获取）
     let params = {
-        pageNum: pageNum.value,
-        pageSize: pageSize.value,
-        categoryId: categoryId.value ? categoryId.value : null,
-        state: state.value ? state.value : null,
+        pageNum: pageNum.value,    // 当前页码
+        pageSize: pageSize.value,  // 每页显示条数
+        // 可选的科目过滤条件（示例中被注释）
+        // subject: subject.value ? subject.value : null,
+        // 可选的线上/线下过滤条件（示例中被注释） 
+        // online: online.value ? online.value : null,
     }
-    let result = await articleListService(params);
-
-    // 渲染视图
-    total.value = result.data.total;
-    articles.value = result.data.items;
-
-    // 处理数据，给数据模型扩展一个属性categoryName，变量名称
-    for (let i = 0; i < articles.value.length; i++) {
-        let article = articles.value[i];
-        for (let j = 0; j < categorys.value.length; j++) {
-            if (article.categoryId == categorys.value[j].id) {
-                article.categoryName = categorys.value[j].categoryName
-            }
-        }
+    // 调用推荐列表服务获取数据
+    let result = await recommendListService(params);
+    // 数据处理流程
+    if (result.data && result.data.items) {
+        // 更新总数据条数（用于分页显示）
+        total.value = result.data.total;
+        // 星期映射表：将英文缩写转换为中文星期显示
+        const dayMap = {
+            mon: '星期一',  // Monday
+            tue: '星期二',  // Tuesday
+            wed: '星期三',  // Wednesday
+            thu: '星期四',  // Thursday
+            fri: '星期五',  // Friday
+            sat: '星期六',  // Saturday
+            sun: '星期日'   // Sunday
+        };
+        // 转换数据结构：将后端数据转换为前端需要的格式
+        recommends.value = result.data.items.map(item => {
+            // 基础数据：从推荐主体数据中提取
+            const recommendData = item.recommend;
+            
+            // 处理时间数据 ------------------------------------------------------
+            // 安全处理：确保dates变量始终是数组（防止undefined/null导致.map报错）
+            // 注意：如果recommendDates是字符串需要先转换，此处假设已修复后端返回格式
+            const dates = item.recommendDates || [];  // 空数组兜底
+            
+            // 构建时间显示字符串
+            const timeString = dates
+                .map(dateObj => {
+                    // 转换星期显示：将英文缩写转为中文
+                    // 安全处理：转换小写 + 默认显示原始值（防止未知值导致显示异常）
+                    const dayName = dayMap[dateObj.day.toLowerCase()] || dateObj.day;
+                    
+                    // 时间格式处理：截取HH:MM部分（假设后端返回格式为HH:mm:ss）
+                    const startTime = dateObj.startTime 
+                        ? dateObj.startTime.substring(0, 5)  // 截取前5位(08:00)
+                        : 'N/A';  // 异常兜底
+                    const endTime = dateObj.endTime 
+                        ? dateObj.endTime.substring(0, 5) 
+                        : 'N/A';
+                        
+                    // 返回单条时间信息格式：e.g. "星期一 08:00-17:00"
+                    return `${dayName} ${startTime}-${endTime}`;
+                })
+                .join(', ');  // 多条用逗号分隔
+            
+            // 返回最终结构 ------------------------------------------------------
+            return {
+                recommendId: recommendData.recommendId,             // ID直接传递
+                subject: recommendData.subject,                     // 科目直接传递
+                online: recommendData.online ? '线上' : '线下',      // 布尔转中文
+                price: String(recommendData.price),                 // 价格转字符串(显示需要)
+                time: timeString || '暂无时间安排',                  // 空数据兜底显示
+                detail: recommendData.detail
+            };
+        });
+        
+        // 调试输出：在控制台显示转换后的数据结构
+        console.log("转换后的推荐数据:", recommends.value);
+    } else {
+        // 异常处理：数据缺失时清空列表
+        total.value = 0;            // 重置总条数
+        recommends.value = [];      // 清空推荐列表
+        console.error("数据获取或处理失败:", result);  // 输出错误日志
     }
-}
+};
 
-articleList()
+recommendList();
 
 //控制抽屉是否显示
-const visibleDrawer = ref(false)
+const visibleDrawer = ref(false);
 
 // 应聘信息数据模型
 const recommendModel = ref({
@@ -246,7 +276,7 @@ const addRecommend = async() => {
     };
 
     // 刷新当前列表
-    // articleList();
+    recommendList();
 }
 
 </script>
@@ -255,6 +285,7 @@ const addRecommend = async() => {
 
 <template>
     <el-card class="page-container">
+        
         <template #header>
             <div class="header">
                 <span>应聘信息发布与管理</span>
@@ -263,19 +294,27 @@ const addRecommend = async() => {
                 </div>
             </div>
         </template>
+
         <!-- 搜索表单 -->
         <el-form inline>
             <el-form-item label="辅导科目：">
-                <el-select placeholder="请选择" v-model="categoryId">
-                    <el-option v-for="c in categorys" :key="c.id" :label="c.categoryName" :value="c.id">
-                    </el-option>
+                <el-select placeholder="请选择" v-model="subject">
+                    <el-option label="语文" value="语文"></el-option>
+                    <el-option label="数学" value="数学"></el-option>
+                    <el-option label="英语" value="英语"></el-option>
+                    <el-option label="物理" value="物理"></el-option>
+                    <el-option label="化学" value="化学"></el-option>
+                    <el-option label="生物" value="生物"></el-option>
+                    <el-option label="历史" value="历史"></el-option>
+                    <el-option label="地理" value="地理"></el-option>
+                    <el-option label="政治" value="政治"></el-option>
                 </el-select>
             </el-form-item>
 
             <el-form-item label="上课形式：">
-                <el-select placeholder="请选择" v-model="state">
-                    <el-option label="已发布" value="已发布"></el-option>
-                    <el-option label="草稿" value="草稿"></el-option>
+                <el-select placeholder="请选择" v-model="online">
+                    <el-option label="线上" value="true"></el-option>
+                    <el-option label="线下" value="false"></el-option>
                 </el-select>
             </el-form-item>
             <el-form-item>
@@ -283,19 +322,22 @@ const addRecommend = async() => {
                 <el-button @click="categoryId = ''; state = ''; articleList()">重置</el-button>
             </el-form-item>
         </el-form>
-        <!-- 文章列表 -->
-        <el-table :data="articles" style="width: 100%">
 
-            <el-table-column label="文章标题" width="400" prop="title"></el-table-column>
 
-            <el-table-column label="分类" prop="categoryName"></el-table-column>
+        <!-- 应聘信息列表 -->
+        <el-table :data="recommends" style="width: 100%">
 
-            <el-table-column label="发表时间" prop="createTime"> </el-table-column>
+            <el-table-column label="辅导科目" prop="subject"></el-table-column>
 
-            <el-table-column label="状态" prop="state"></el-table-column>
+            <el-table-column label="辅导价格" prop="price"></el-table-column>
 
-            <el-table-column label="操作" width="100">
+            <el-table-column label="辅导形式" prop="online"> </el-table-column>
+
+            <el-table-column label="辅导时间" width="400" prop="time"></el-table-column>
+
+            <el-table-column label="操作" width="150">
                 <template #default="{ row }">
+                    <el-button :icon="Message" circle plain type="info"></el-button>
                     <el-button :icon="Edit" circle plain type="primary"></el-button>
                     <el-button :icon="Delete" circle plain type="danger"></el-button>
                 </template>
@@ -306,10 +348,12 @@ const addRecommend = async() => {
             </template>
 
         </el-table>
+
         <!-- 分页条 -->
         <el-pagination v-model:current-page="pageNum" v-model:page-size="pageSize" :page-sizes="[3, 5, 10, 15]"
             layout="jumper, total, sizes, prev, pager, next" background :total="total" @size-change="onSizeChange"
             @current-change="onCurrentChange" style="margin-top: 20px; justify-content: flex-end" />
+    
     </el-card>
 
     <!-- 抽屉 -->
