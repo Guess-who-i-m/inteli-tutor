@@ -4,13 +4,15 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.web.amazingtutor.common.R;
+import com.web.amazingtutor.dto.RecommendItem;
 import com.web.amazingtutor.dto.RecruitItem;
 import com.web.amazingtutor.enums.DayEnum;
 import com.web.amazingtutor.enums.SchLevelEnum;
 import com.web.amazingtutor.enums.StuLevelEnum;
-import com.web.amazingtutor.pojo.Recruit;
-import com.web.amazingtutor.pojo.RecruitDate;
+import com.web.amazingtutor.pojo.*;
 import com.web.amazingtutor.service.*;
 import com.web.amazingtutor.utils.ThreadLocalUtil;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @Slf4j
@@ -64,8 +65,8 @@ public class RecruitController {
         try {
             jsonNode = mapper.readTree(json);
             price = jsonNode.get("price").asInt();
-            schLevel = jsonNode.get("sch_level").asText();
-            stuLevel = jsonNode.get("stu_level").asText();
+            schLevel = jsonNode.get("schLevel").asText();
+            stuLevel = jsonNode.get("stuLevel").asText();
             subject = jsonNode.get("subject").asText();
             online = jsonNode.get("online").asBoolean();
             detail = jsonNode.get("detail").asText();
@@ -243,37 +244,64 @@ public class RecruitController {
         return R.successMsg("删除成功");
     }
 
-    @GetMapping("/getMyRecruits")
-    public R<List<RecruitItem>> getMyRecruits() {
-        Map<String,Object> map = ThreadLocalUtil.get();
-        ObjectMapper mapper = new ObjectMapper();
+    @GetMapping("getMyRecruits")
+    public R<PageBean<RecruitItem>> getMyRecruits(Integer pageNum, Integer pageSize) {
+        Map<String, Object> map = ThreadLocalUtil.get();
+        Object userId = map.get("id"); // 建议检查 userId 是否为 null 或类型是否正确
 
-        QueryWrapper<Recruit> recruitQueryWrapper = new QueryWrapper<>();
-        recruitQueryWrapper.eq("stu_id", map.get("id"));
-        List<Recruit> recruits = recruitService.list(recruitQueryWrapper);
+        // 1. 分页查询主表 Recommend
+        PageHelper.startPage(pageNum, pageSize);
 
-        List<RecruitItem> recruitItems = new ArrayList<>();
+        QueryWrapper<Recruit> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("stu_id", userId);
+        List<Recruit> pagedRecruits = recruitService.list(queryWrapper);  // pagedRecruits 现在是 Page<Recruit> 类型
 
-        int recruitId = 0;
-        List<RecruitDate> recruitDates;
-        for (Recruit recruit: recruits) {
-            RecruitItem item = new RecruitItem();
-            recruitId = recruit.getRecruitId();
+        List<RecruitItem> recruitItemsResultList = new ArrayList<>();
+        long totalRecords = 0;
 
-            QueryWrapper<RecruitDate> recruitDateQueryWrapper = new QueryWrapper<>();
-            recruitDateQueryWrapper.eq("recruit_id", recruitId);
-            recruitDates = recruitDateService.list(recruitDateQueryWrapper);
-
-            item.setRecruit(recruit);
-            if (!recruitDates.isEmpty()) {
-                item.setRecruitDates(recruitDates);
-            }
-
-
-            recruitItems.add(item);
+        if (pagedRecruits instanceof Page) {
+            totalRecords = ((Page<Recruit>) pagedRecruits).getTotal();
+        } else {
+            // 如果不是 Page 类型，可能 PageHelper 没有正确工作或 service.list() 返回的不是直接的 mapper 调用结果
+            // 在这种情况下，totalRecords 可能需要另外查询或默认为当前列表大小（不准确）
+            totalRecords = pagedRecruits.size(); // 这是一个不准确的回退
         }
 
-        return R.success(recruitItems);
+
+        if (!pagedRecruits.isEmpty()) {
+            // 2. 收集所有 pagedRecommends 的 recommend_id
+            List<Integer> recruitIds = pagedRecruits.stream()
+                    .map(Recruit::getRecruitId)
+                    .collect(Collectors.toList());
+
+            // 3. 一次性查询所有相关的 RecommendDate
+            Map<Integer, List<RecruitDate>> datesByRecruitIdMap = new HashMap<>();
+            if (!recruitIds.isEmpty()) {
+                QueryWrapper<RecruitDate> dateQueryWrapper = new QueryWrapper<>();
+                dateQueryWrapper.in("recruit_id", recruitIds); // 使用 IN 查询
+                List<RecruitDate> allRecruitDates = recruitDateService.list(dateQueryWrapper);
+
+                // 将 RecommendDate 按 recommend_id 分组
+                for (RecruitDate rd : allRecruitDates) {
+                    datesByRecruitIdMap.computeIfAbsent(rd.getRecruitId(), k -> new ArrayList<>()).add(rd);
+                }
+            }
+
+            // 4. 组装 RecommendItem
+            for (Recruit recruit : pagedRecruits) {
+                RecruitItem item = new RecruitItem();
+                item.setRecruit(recruit);
+                // 从 Map 中获取对应的 RecommendDate列表，如果不存在则给一个空列表
+                item.setRecruitDates(datesByRecruitIdMap.getOrDefault(recruit.getRecruitId(), Collections.emptyList()));
+                recruitItemsResultList.add(item);
+            }
+        }
+
+        PageBean<RecruitItem> pageBean = new PageBean<>();
+        pageBean.setTotal(totalRecords);
+        pageBean.setItems(recruitItemsResultList); // recommendItemsResultList 只包含当前页的数据
+
+        return R.success(pageBean);
     }
 
     @GetMapping("/getAllRecruits")
