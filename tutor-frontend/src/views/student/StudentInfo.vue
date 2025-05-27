@@ -27,7 +27,7 @@ import useUserInfoStore from '@/stores/userInfo'
 
 const userInfoStore = useUserInfoStore()
 
-const getUserInfo = ()=>{
+const getUserInfo = () => {
     userInfo.value = userInfoStore.info
 }
 
@@ -37,13 +37,13 @@ import { userInfoUpdateService } from '@/api/user'
 import { ElMessage } from 'element-plus'
 import { studentInfoUpdateService } from '@/api/student'
 
-const modifyUserInfo = async()=>{
+const modifyUserInfo = async () => {
     // 虽然这个vue文件里只控制了username、gender、grade、addr和phoneNum等信息
     // 但由于pinia里存储了avatar，所以发送请求包含了原本avatar的数据，不用担心avatar丢失
     let result = await studentInfoUpdateService(userInfo.value)
 
-    ElMessage.success(result.message ? result.message: "修改成功")
-    
+    ElMessage.success(result.message ? result.message : "修改成功")
+
     // 修改pinia中的信息
     userInfoStore.setInfo(userInfo.value)
 }
@@ -66,12 +66,36 @@ const modifyUserInfo = async()=>{
                         <el-input v-model="userInfo.username" disabled></el-input>
                     </el-form-item>
 
-                    <el-form-item label="学生性别" prop="gender">
+                    <!-- <el-form-item label="学生性别" prop="gender">
                         <el-input v-model="userInfo.gender"></el-input>
+                    </el-form-item> -->
+
+                    <el-form-item label="学生性别" prop="gender">
+                        <el-radio-group v-model="userInfo.gender">
+                            <el-radio value="M">男生</el-radio>
+                            <el-radio value="F">女生</el-radio>
+                        </el-radio-group>
                     </el-form-item>
 
-                    <el-form-item label="学生年级" prop="grade">
+                    <!-- <el-form-item label="学生年级" prop="grade">
                         <el-input v-model="userInfo.grade"></el-input>
+                    </el-form-item> -->
+
+                    <el-form-item label="学生年级">
+                        <el-select v-model="userInfo.grade" placeholder="请选择您孩子的年级">
+                            <el-option label="小学一年级" value="1" />
+                            <el-option label="小学二年级" value="2" />
+                            <el-option label="小学三年级" value="3" />
+                            <el-option label="小学四年级" value="4" />
+                            <el-option label="小学五年级" value="5" />
+                            <el-option label="小学六年级" value="6" />
+                            <el-option label="初中一年级" value="7" />
+                            <el-option label="初中二年级" value="8" />
+                            <el-option label="初中三年级" value="9" />
+                            <el-option label="高中一年级" value="10" />
+                            <el-option label="高中一年级" value="11" />
+                            <el-option label="高中一年级" value="12" />
+                        </el-select>
                     </el-form-item>
 
                     <el-form-item label="家庭住址" prop="addr">

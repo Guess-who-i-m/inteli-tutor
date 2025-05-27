@@ -140,9 +140,7 @@ const recommendList = async () => {
                 online: recommendData.online ? '线上' : '线下',      // 布尔转中文
                 price: String(recommendData.price),                 // 价格转字符串(显示需要)
                 time: timeString || '暂无时间安排',                  // 空数据兜底显示
-                detail: recommendData.detail,
-                // **新增：保留原始的时间数据数组**
-                originalDates: dates // 将原始的 recommendDates 数组添加到 row 对象中               
+                detail: recommendData.detail
             };
         });
         
@@ -184,6 +182,10 @@ import { ElMessage } from 'element-plus'
 const handlePriceInput = (value) => {
     recommendModel.value.price = value ? parseInt(value) || 0 : null;
 }
+// // 确保online为布尔值
+// const handleOnlineChange = (value) => {
+//     recommendModel.value.online = Boolean(value);
+// }
 
 // 处理时间组数量变化
 const handleTimeNumChange = (newVal) => {
@@ -260,16 +262,16 @@ const addRecommend = async() => {
     ElMessage.success(result.message? result.message : '添加成功')
 
     // 添加成功后清空表单
-    // recommendModel.value = {
-    //     price: null,
-    //     subject: '',
-    //     online: true,
-    //     detail: '',
-    //     time_num: 1,  // 重置为默认1组时间
-    //     days: ['mon'], // 重置为默认周一
-    //     start_times: ['08:00:00'], // 重置为默认开始时间
-    //     end_times: ['17:00:00']   // 重置为默认结束时间
-    // };
+    recommendModel.value = {
+        price: null,
+        subject: '',
+        online: true,
+        detail: '',
+        time_num: 1,  // 重置为默认1组时间
+        days: ['mon'], // 重置为默认周一
+        start_times: ['08:00:00'], // 重置为默认开始时间
+        end_times: ['17:00:00']   // 重置为默认结束时间
+    };
 
     // 刷新当前列表
     recommendList();
@@ -286,57 +288,18 @@ const showDrawer = (row) => {
     //数据拷贝
     recommendModel.value.price = row.price;
     recommendModel.value.subject = row.subject;
-    recommendModel.value.online = row.online === '线上' ? true : false; // 根据显示文本判断
+    recommendModel.value.online = row.online;
     recommendModel.value.detail = row.detail;
-    // **修改：根据原始时间数据填充时间相关字段**
-    if (row.originalDates && row.originalDates.length > 0) {
-        recommendModel.value.time_num = row.originalDates.length;
-        recommendModel.value.days = row.originalDates.map(date => date.day.toLowerCase()); // 转换为小写，与 option value 匹配
-        recommendModel.value.start_times = row.originalDates.map(date => date.startTime);
-        recommendModel.value.end_times = row.originalDates.map(date => date.endTime);
-    } else {
-        // 如果没有原始时间数据，则使用默认值
-        recommendModel.value.time_num = 1;
-        recommendModel.value.days = ['mon'];
-        recommendModel.value.start_times = ['08:00:00'];
-        recommendModel.value.end_times = ['17:00:00'];
-    }
+    recommendModel.value.time_num = row.time_num;
+    recommendModel.value.days = JSON.parse(JSON.stringify(row.days || []));
+    recommendModel.value.start_times = JSON.parse(JSON.stringify(row.start_times || []));
+    recommendModel.value.end_times = JSON.parse(JSON.stringify(row.end_times || []));
     //扩展 recommendModel的id属性，将来需要传递给后台，完成分类的修改
-    recommendModel.value.recommend_id = row.recommendId
+    recommendModel.value.recommendId = row.recommendId
 }
 
 //修改发布信息
 const updateRecommend = async () => {
-    // 验证时间有效性
-    const timeValid = validateTimes();
-    if (timeValid !== true) {
-        ElMessage.error(timeValid);
-        return;
-    }
-    
-    // **根据后端接口文档构建提交数据**
-    const submitData = {
-        // // 字段名改为 recommend_id，值从 recommendModel.value.recommendId 获取
-        // // recommend_id: recommendModel.value.recommendId,
-        // // price 保持数字类型 (确保从输入框获取的值是数字)
-        // price: Number(recommendModel.value.price),
-        // subject: recommendModel.value.subject,
-        // // online 保持布尔类型
-        // online: SrecommendModel.value.online,
-        // detail: recommendModel.value.detail,
-        // // time_num 转换为字符串类型
-        // time_num: String(recommendModel.value.time_num),
-
-        ...recommendModel.value,
-        // days, start_times, end_times 保持数组 of string 类型
-        days: recommendModel.value.days.slice(0, recommendModel.value.time_num), // 确保长度正确
-        start_times: recommendModel.value.start_times.slice(0, recommendModel.value.time_num), // 确保长度正确
-        end_times: recommendModel.value.end_times.slice(0, recommendModel.value.time_num) // 确保长度正确
-    };
-
-    // 调用接口
-    console.log(submitData);
-
     //调用接口
     let result = await recommendUpdateService(recommendModel.value);
 
@@ -349,27 +312,17 @@ const updateRecommend = async () => {
     visibleDrawer.value = false;
 }
 
-//清空模型的数据防止回显
-const clearData = () => {
-    // recommendModel.value.price = null;
-    // recommendModel.value.subject = '';
-    // recommendModel.value.online = true;
-    // recommendModel.value.detail = '';
-    // recommendModel.value.time_num = '';
-    // recommendModel.value.days = ['mon'];
-    // recommendModel.value.start_times = ['08:00:00'];
-    // recommendModel.value.end_times = ['17:00:00'];
-    recommendModel.value = {
-        price: null,
-        subject: '',
-        online: null,
-        detail: ' ',
-        time_num: 1,  // 重置为默认1组时间
-        days: ['mon'], // 重置为默认周一
-        start_times: ['08:00:00'], // 重置为默认开始时间
-        end_times: ['17:00:00']   // 重置为默认结束时间
-    };
-}
+// //清空模型的数据防止回显
+// const clearData = () => {
+//     recommendModel.value.price = null;
+//     recommendModel.value.subject = '';
+//     recommendModel.value.online = true;
+//     recommendModel.value.detail = '';
+//     recommendModel.value.time_num = '';
+//     recommendModel.value.days = ['mon'];
+//     recommendModel.value.start_times = ['08:00:00'];
+//     recommendModel.value.end_times = ['17:00:00'];
+// }
 
 </script>
 
@@ -382,7 +335,7 @@ const clearData = () => {
             <div class="header">
                 <span>应聘信息发布与管理</span>
                 <div class="extra">
-                    <el-button type="primary" @click="visibleDrawer = true; title='发布应聘'; clearData()">发布应聘</el-button>
+                    <el-button type="primary" @click="visibleDrawer = true; title='发布应聘'">发布应聘</el-button>
                 </div>
             </div>
         </template>
@@ -410,8 +363,8 @@ const clearData = () => {
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="recommendList">搜索</el-button>
-                <el-button @click="subject = ''; online = ''; recommendList()">重置</el-button>
+                <el-button type="primary" @click="articleList">搜索</el-button>
+                <el-button @click="categoryId = ''; state = ''; articleList()">重置</el-button>
             </el-form-item>
         </el-form>
 
