@@ -10,3 +10,17 @@ export const recommendAddService = (recommendData) => {
 export const recommendListService = (params) =>{
     return request.get('/recommend/getMyRecommends', {params:params})
 }
+
+//文章分类修改接口
+export const recommendUpdateService = (recommendData)=>{
+    return request.post('/recommend/updateRecommend',recommendData)
+}
+
+
+//文章分类删除接口
+// export const recommendDeleteService = (id)=>{
+//     return request.delete('/category?id='+id)
+// }
+
+
+
