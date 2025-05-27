@@ -3,7 +3,6 @@
 // 目前没来得及做
 // 删除按钮
 // 条件筛选
-// 修改按钮
 // 显示detail
 
 import {
@@ -184,10 +183,6 @@ import { ElMessage } from 'element-plus'
 const handlePriceInput = (value) => {
     recommendModel.value.price = value ? parseInt(value) || 0 : null;
 }
-// // 确保online为布尔值
-// const handleOnlineChange = (value) => {
-//     recommendModel.value.online = Boolean(value);
-// }
 
 // 处理时间组数量变化
 const handleTimeNumChange = (newVal) => {
@@ -263,18 +258,6 @@ const addRecommend = async () => {
 
     ElMessage.success(result.message ? result.message : '添加成功')
 
-    // 添加成功后清空表单
-    // recommendModel.value = {
-    //     price: null,
-    //     subject: '',
-    //     online: true,
-    //     detail: '',
-    //     time_num: 1,  // 重置为默认1组时间
-    //     days: ['mon'], // 重置为默认周一
-    //     start_times: ['08:00:00'], // 重置为默认开始时间
-    //     end_times: ['17:00:00']   // 重置为默认结束时间
-    // };
-
     // 刷新当前列表
     recommendList();
 
@@ -320,16 +303,6 @@ const updateRecommend = async () => {
 
     // **根据后端接口文档构建提交数据**
     const submitData = {
-        // // 字段名改为 recommend_id，值从 recommendModel.value.recommendId 获取
-        // // recommend_id: recommendModel.value.recommendId,
-        // // price 保持数字类型 (确保从输入框获取的值是数字)
-        // price: Number(recommendModel.value.price),
-        // subject: recommendModel.value.subject,
-        // // online 保持布尔类型
-        // online: SrecommendModel.value.online,
-        // detail: recommendModel.value.detail,
-        // // time_num 转换为字符串类型
-        // time_num: String(recommendModel.value.time_num),
 
         ...recommendModel.value,
         // days, start_times, end_times 保持数组 of string 类型
@@ -456,8 +429,8 @@ const deleteRecommend = (row) => {
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="articleList">搜索</el-button>
-                <el-button @click="categoryId = ''; state = ''; articleList()">重置</el-button>
+                <el-button type="primary" @click="recommendList">搜索</el-button>
+                <el-button @click="subject = ''; online = ''; recommendList()">重置</el-button>
             </el-form-item>
         </el-form>
 

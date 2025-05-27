@@ -38,7 +38,6 @@ const getUserInfo = () => {
 
 getUserInfo()
 
-import { userInfoUpdateService } from '@/api/user'
 import { ElMessage } from 'element-plus'
 import { teacherInfoUpdateService } from '@/api/teacher'
 
@@ -92,11 +91,11 @@ const modifyUserInfo = async () => {
 
                     <el-form-item label="学校层次" label-position="eb" prop="schLevel">
                         <el-radio-group v-model="userInfo.schLevel" aria-label="label position">
-                            <el-radio-button value="eb">二本</el-radio-button>
-                            <el-radio-button value="yb">一本</el-radio-button>
-                            <el-radio-button value="eyy">211</el-radio-button>
                             <el-radio-button value="jbw">985</el-radio-button>
+                            <el-radio-button value="eyy">211</el-radio-button>
                             <el-radio-button value="syl">双一流</el-radio-button>
+                            <el-radio-button value="yb">一本</el-radio-button>
+                            <el-radio-button value="eb">二本</el-radio-button>
                         </el-radio-group>
                     </el-form-item>
 
@@ -125,3 +124,48 @@ const modifyUserInfo = async () => {
         </el-row>
     </el-card>
 </template>
+
+<style lang="scss" scoped>
+.avatar-uploader {
+    :deep() {
+        .avatar {
+            width: 278px;
+            height: 278px;
+            display: block;
+        }
+
+        .el-upload {
+            border: 1px dashed var(--el-border-color);
+            border-radius: 6px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: var(--el-transition-duration-fast);
+        }
+
+        .el-upload:hover {
+            border-color: var(--el-color-primary);
+        }
+
+        .el-icon.avatar-uploader-icon {
+            font-size: 28px;
+            color: #8c939d;
+            width: 278px;
+            height: 278px;
+            text-align: center;
+        }
+    }
+}
+
+.page-container {
+    min-height: 100%;
+    box-sizing: border-box;
+
+    .header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+}
+
+</style>
