@@ -18,9 +18,10 @@ export const recommendUpdateService = (recommendData)=>{
 
 
 //文章分类删除接口
-// export const recommendDeleteService = (id)=>{
-//     return request.delete('/category?id='+id)
-// }
+export const recommendDeleteService = (recommendId) => {
+    // 这里是关键：将 recommendId 封装到 JSON 对象中
+    return request.post('/recommend/deleteRecommend', recommendId);
+};
 
 
 

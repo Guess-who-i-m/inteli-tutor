@@ -6,10 +6,17 @@ import com.web.amazingtutor.pojo.Student;
 import com.web.amazingtutor.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl extends ServiceImpl<StudentMapper, Student> implements StudentService {
+    @Override
+    @Transactional
+    public boolean register(Student student) {
+        return save(student);
+    }
+
     private final CommentMapper commentMapper;
     private final TeacherMapper teacherMapper;
     private final RecommendMapper recommendMapper;

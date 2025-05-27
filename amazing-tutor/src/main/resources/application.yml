@@ -6,7 +6,7 @@ spring:
     #username: raffle
     #password: 'wz7idGFGFwbAMiEp'
     username: root
-    password: '252099'
+    password: '114514'
 
   # application.yml
   servlet:
@@ -16,7 +16,7 @@ spring:
 
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml  # XML ??
-  type-aliases-package: com.edu.hit.raffle.pojo
+  type-aliases-package: com.web.amazingtutor.pojo
 
   configuration:
     #?????????????????????????????????????????
@@ -26,6 +26,8 @@ mybatis-plus:
     db-config:
       id-type: AUTO
 
+#transaction:
+#  rollback-on-commit-failure: true
 
 
 server:

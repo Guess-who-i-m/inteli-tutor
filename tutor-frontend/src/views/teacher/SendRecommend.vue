@@ -28,7 +28,7 @@ const recommends = ref([
         "online": "线上",
         "price": "100",
         "time": "星期一 19:00-21:00, 星期三 20:00-22:00",
-        "detail":"这是一则有关描述"
+        "detail": "这是一则有关描述"
     },
     {
         "recommendId": 1,
@@ -36,7 +36,7 @@ const recommends = ref([
         "online": "线上",
         "price": "100",
         "time": "星期一 19:00-21:00, 星期三 20:00-22:00",
-        "detail":"这是一则有关描述"
+        "detail": "这是一则有关描述"
     },
     {
         "recommendId": 1,
@@ -44,7 +44,7 @@ const recommends = ref([
         "online": "线上",
         "price": "100",
         "time": "星期一 19:00-21:00, 星期三 20:00-22:00",
-        "detail":"这是一则有关描述"
+        "detail": "这是一则有关描述"
     },
     {
         "recommendId": 1,
@@ -52,7 +52,7 @@ const recommends = ref([
         "online": "线上",
         "price": "100",
         "time": "星期一 19:00-21:00, 星期三 20:00-22:00",
-        "detail":"这是一则有关描述"
+        "detail": "这是一则有关描述"
     }
 ])
 
@@ -74,7 +74,7 @@ const onCurrentChange = (num) => {
 
 
 
-import { recommendListService,recommendAddService, recommendUpdateService} from '@/api/recommend'
+import { recommendListService, recommendAddService, recommendUpdateService, recommendDeleteService } from '@/api/recommend'
 
 // 异步获取推荐列表数据并处理
 const recommendList = async () => {
@@ -107,32 +107,32 @@ const recommendList = async () => {
         recommends.value = result.data.items.map(item => {
             // 基础数据：从推荐主体数据中提取
             const recommendData = item.recommend;
-            
+
             // 处理时间数据 ------------------------------------------------------
             // 安全处理：确保dates变量始终是数组（防止undefined/null导致.map报错）
             // 注意：如果recommendDates是字符串需要先转换，此处假设已修复后端返回格式
             const dates = item.recommendDates || [];  // 空数组兜底
-            
+
             // 构建时间显示字符串
             const timeString = dates
                 .map(dateObj => {
                     // 转换星期显示：将英文缩写转为中文
                     // 安全处理：转换小写 + 默认显示原始值（防止未知值导致显示异常）
                     const dayName = dayMap[dateObj.day.toLowerCase()] || dateObj.day;
-                    
+
                     // 时间格式处理：截取HH:MM部分（假设后端返回格式为HH:mm:ss）
-                    const startTime = dateObj.startTime 
+                    const startTime = dateObj.startTime
                         ? dateObj.startTime.substring(0, 5)  // 截取前5位(08:00)
                         : 'N/A';  // 异常兜底
-                    const endTime = dateObj.endTime 
-                        ? dateObj.endTime.substring(0, 5) 
+                    const endTime = dateObj.endTime
+                        ? dateObj.endTime.substring(0, 5)
                         : 'N/A';
-                        
+
                     // 返回单条时间信息格式：e.g. "星期一 08:00-17:00"
                     return `${dayName} ${startTime}-${endTime}`;
                 })
                 .join(', ');  // 多条用逗号分隔
-            
+
             // 返回最终结构 ------------------------------------------------------
             return {
                 recommendId: recommendData.recommendId,             // ID直接传递
@@ -145,7 +145,7 @@ const recommendList = async () => {
                 originalDates: dates // 将原始的 recommendDates 数组添加到 row 对象中               
             };
         });
-        
+
         // 调试输出：在控制台显示转换后的数据结构
         console.log("转换后的推荐数据:", recommends.value);
     } else {
@@ -163,14 +163,14 @@ const visibleDrawer = ref(false);
 
 // 应聘信息数据模型
 const recommendModel = ref({
-    price:null,
-    subject:'',
-    online:null,
-    detail:'',
-    time_num: 1,  
-    days: ['mon'], 
-    start_times: ['08:00:00'], 
-    end_times: ['17:00:00']   
+    price: null,
+    subject: '',
+    online: null,
+    detail: '',
+    time_num: 1,
+    days: ['mon'],
+    start_times: ['08:00:00'],
+    end_times: ['17:00:00']
 })
 
 import { QuillEditor } from '@vueup/vue-quill'
@@ -228,7 +228,7 @@ const validateTimes = () => {
     for (let i = 0; i < recommendModel.value.time_num; i++) {
         const start = recommendModel.value.start_times[i];
         const end = recommendModel.value.end_times[i];
-        
+
         if (start >= end) {
             return `时间组 ${i + 1} 的开始时间必须早于结束时间`;
         }
@@ -238,7 +238,7 @@ const validateTimes = () => {
 
 // import { recommendAddService } from '@/api/recommend'
 
-const addRecommend = async() => {
+const addRecommend = async () => {
 
     // 验证时间有效性
     const timeValid = validateTimes();
@@ -246,7 +246,7 @@ const addRecommend = async() => {
         ElMessage.error(timeValid);
         return;
     }
-    
+
     // 准备提交数据
     const submitData = {
         ...recommendModel.value,
@@ -261,7 +261,7 @@ const addRecommend = async() => {
 
     let result = await recommendAddService(submitData);
 
-    ElMessage.success(result.message? result.message : '添加成功')
+    ElMessage.success(result.message ? result.message : '添加成功')
 
     // 添加成功后清空表单
     // recommendModel.value = {
@@ -317,7 +317,7 @@ const updateRecommend = async () => {
         ElMessage.error(timeValid);
         return;
     }
-    
+
     // **根据后端接口文档构建提交数据**
     const submitData = {
         // // 字段名改为 recommend_id，值从 recommendModel.value.recommendId 获取
@@ -375,18 +375,60 @@ const clearData = () => {
     };
 }
 
+//删除分类
+import { ElMessageBox } from "element-plus"
+const deleteRecommend = (row) => {
+    //提示用户 确认框
+    ElMessageBox.confirm(
+        '你确定要删除分类信息吗？',
+        '温馨提示',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(async () => {
+            try {
+                //调用接口
+                console.log("114514:", row.recommendId);
+                let result = await recommendDeleteService({ recommend_id: row.recommendId });
+                // ElMessage.success(result.message?result.message:'删除成功')
+                // console.log("114514:", row.recommendId);
+                ElMessage({
+                    type: 'success',
+                    message: '删除成功',
+                })
+                //刷新列表
+                recommendList();
+            } catch (error) {
+                console.log("114514:", row);
+                ElMessage({
+                    type: 'error',
+                    message: '删除失败：' + (error.message || '未知错误'),
+                })
+            }
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: '用户取消了删除',
+            })
+        })
+}
+
+
+
+
 </script>
-
-
-
 <template>
     <el-card class="page-container">
-        
+
         <template #header>
             <div class="header">
                 <span>应聘信息发布与管理</span>
                 <div class="extra">
-                    <el-button type="primary" @click="visibleDrawer = true; title='发布应聘'; clearData()">发布应聘</el-button>
+                    <el-button type="primary" @click="visibleDrawer = true; title = '发布应聘'; clearData()">发布应聘</el-button>
                 </div>
             </div>
         </template>
@@ -433,9 +475,9 @@ const clearData = () => {
 
             <el-table-column label="操作" width="150">
                 <template #default="{ row }">
-                    <el-button :icon="Message" circle plain type="info" ></el-button>
+                    <el-button :icon="Message" circle plain type="info"></el-button>
                     <el-button :icon="Edit" circle plain type="primary" @click="showDrawer(row)"></el-button>
-                    <el-button :icon="Delete" circle plain type="danger"></el-button>
+                    <el-button :icon="Delete" circle plain type="danger" @click="deleteRecommend(row)"></el-button>
                 </template>
             </el-table-column>
 
@@ -449,7 +491,7 @@ const clearData = () => {
         <el-pagination v-model:current-page="pageNum" v-model:page-size="pageSize" :page-sizes="[3, 5, 10, 15]"
             layout="jumper, total, sizes, prev, pager, next" background :total="total" @size-change="onSizeChange"
             @current-change="onCurrentChange" style="margin-top: 20px; justify-content: flex-end" />
-    
+
     </el-card>
 
     <!-- 抽屉  添加发布信息弹窗 判断title 复用同一弹窗有回显-->
@@ -471,19 +513,14 @@ const clearData = () => {
             </el-form-item>
 
             <el-form-item label="辅导形式">
-                <el-select 
-                    placeholder="请选择" 
-                    v-model="recommendModel.online">
+                <el-select placeholder="请选择" v-model="recommendModel.online">
                     <el-option label="线上" value="true"></el-option>
                     <el-option label="线下" value="false"></el-option>
                 </el-select>
             </el-form-item>
 
             <el-form-item label="辅导价格">
-                <el-input 
-                    v-model="recommendModel.price" 
-                    type="number"
-                    placeholder="请输入价格(元/小时)"
+                <el-input v-model="recommendModel.price" type="number" placeholder="请输入价格(元/小时)"
                     @input="handlePriceInput">
                 </el-input>
             </el-form-item>
@@ -498,14 +535,10 @@ const clearData = () => {
 
             <!-- 时间组数量 -->
             <el-form-item label="时间组数" prop="time_num">
-                <el-input-number 
-                    v-model="recommendModel.time_num" 
-                    :min="1" 
-                    :max="7"
-                    @change="handleTimeNumChange"
-                ></el-input-number>
+                <el-input-number v-model="recommendModel.time_num" :min="1" :max="7"
+                    @change="handleTimeNumChange"></el-input-number>
             </el-form-item>
-            
+
             <!-- 动态时间组 -->
             <div v-for="(item, index) in recommendModel.time_num" :key="index">
                 <el-form-item :label="`时间组 ${index + 1}`">
@@ -524,30 +557,22 @@ const clearData = () => {
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                        
+
                         <!-- 开始时间 -->
                         <el-col :span="8">
                             <el-form-item :prop="`start_times[${index}]`">
-                                <el-time-picker
-                                    v-model="recommendModel.start_times[index]"
-                                    format="HH:mm"          
-                                    value-format="HH:mm:ss" 
-                                    placeholder="开始时间"
-                                    @change="handleTimeChange($event, 'start_times', index)"
-                                ></el-time-picker>
+                                <el-time-picker v-model="recommendModel.start_times[index]" format="HH:mm"
+                                    value-format="HH:mm:ss" placeholder="开始时间"
+                                    @change="handleTimeChange($event, 'start_times', index)"></el-time-picker>
                             </el-form-item>
                         </el-col>
-                        
+
                         <!-- 结束时间 -->
                         <el-col :span="8">
                             <el-form-item :prop="`end_times[${index}]`">
-                                <el-time-picker
-                                v-model="recommendModel.end_times[index]"
-                                format="HH:mm"          
-                                value-format="HH:mm:ss" 
-                                placeholder="结束时间"
-                                @change="handleTimeChange($event, 'end_times', index)"
-                            ></el-time-picker>
+                                <el-time-picker v-model="recommendModel.end_times[index]" format="HH:mm"
+                                    value-format="HH:mm:ss" placeholder="结束时间"
+                                    @change="handleTimeChange($event, 'end_times', index)"></el-time-picker>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -561,7 +586,7 @@ const clearData = () => {
         </el-form>
 
         <!-- <template></template> -->
-    
+
     </el-drawer>
 
 </template>
@@ -622,5 +647,4 @@ const clearData = () => {
         min-height: 200px;
     }
 }
-
 </style>

@@ -1,15 +1,13 @@
 package com.web.amazingtutor;
 
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication
-@MapperScan("com.web.amazingtutor.mapper")
+@EnableTransactionManagement
 public class AmazingTutorApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(AmazingTutorApplication.class, args);
     }
-
 }
