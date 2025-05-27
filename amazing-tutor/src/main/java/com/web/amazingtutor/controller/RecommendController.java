@@ -273,32 +273,59 @@ public class RecommendController {
 
 
     @GetMapping("/getAllRecommends")
-    public R<List<RecommendItem>> getAllRecommends() {
-        ObjectMapper mapper = new ObjectMapper();
+    public R<PageBean<RecommendItem>> getAllRecommends(Integer pageNum, Integer pageSize) {
 
-        List<Recommend> recommends = recommendService.list();
 
-        List<RecommendItem> recommendItems = new ArrayList<>();
+        // 1. 分页查询主表 Recommend
+        PageHelper.startPage(pageNum, pageSize);
 
-        int recommendId = 0;
-        List<RecommendDate> recommendDates;
+        List<Recommend> pagedRecommends = recommendService.list();  // pagedRecommends 现在是 Page<Recommend> 类型
 
-        for (Recommend recommend : recommends) {
-            RecommendItem item = new RecommendItem();
-            recommendId = recommend.getRecommendId();
+        List<RecommendItem> recommendItemsResultList = new ArrayList<>();
+        long totalRecords = 0;
 
-            QueryWrapper<RecommendDate> queryWrapper1 = new QueryWrapper<>();
-            queryWrapper1.eq("recommend_id", recommendId);
-            recommendDates = recommendDateService.list(queryWrapper1);
-
-            item.setRecommend(recommend);
-            if (!recommendDates.isEmpty()) {
-                item.setRecommendDates(recommendDates);
-            }
-
-            recommendItems.add(item);
+        if (pagedRecommends instanceof Page) {
+            totalRecords = ((Page<Recommend>) pagedRecommends).getTotal();
+        } else {
+            // 如果不是 Page 类型，可能 PageHelper 没有正确工作或 service.list() 返回的不是直接的 mapper 调用结果
+            // 在这种情况下，totalRecords 可能需要另外查询或默认为当前列表大小（不准确）
+            totalRecords = pagedRecommends.size(); // 这是一个不准确的回退
         }
 
-        return R.success(recommendItems);
+
+        if (!pagedRecommends.isEmpty()) {
+            // 2. 收集所有 pagedRecommends 的 recommend_id
+            List<Integer> recommendIds = pagedRecommends.stream()
+                    .map(Recommend::getRecommendId)
+                    .collect(Collectors.toList());
+
+            // 3. 一次性查询所有相关的 RecommendDate
+            Map<Integer, List<RecommendDate>> datesByRecommendIdMap = new HashMap<>();
+            if (!recommendIds.isEmpty()) {
+                QueryWrapper<RecommendDate> dateQueryWrapper = new QueryWrapper<>();
+                dateQueryWrapper.in("recommend_id", recommendIds); // 使用 IN 查询
+                List<RecommendDate> allRecommendDates = recommendDateService.list(dateQueryWrapper);
+
+                // 将 RecommendDate 按 recommend_id 分组
+                for (RecommendDate rd : allRecommendDates) {
+                    datesByRecommendIdMap.computeIfAbsent(rd.getRecommendId(), k -> new ArrayList<>()).add(rd);
+                }
+            }
+
+            // 4. 组装 RecommendItem
+            for (Recommend recommend : pagedRecommends) {
+                RecommendItem item = new RecommendItem();
+                item.setRecommend(recommend);
+                // 从 Map 中获取对应的 RecommendDate列表，如果不存在则给一个空列表
+                item.setRecommendDates(datesByRecommendIdMap.getOrDefault(recommend.getRecommendId(), Collections.emptyList()));
+                recommendItemsResultList.add(item);
+            }
+        }
+
+        PageBean<RecommendItem> pageBean = new PageBean<>();
+        pageBean.setTotal(totalRecords);
+        pageBean.setItems(recommendItemsResultList); // recommendItemsResultList 只包含当前页的数据
+
+        return R.success(pageBean);
     }
 }

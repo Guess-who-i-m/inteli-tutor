@@ -8,3 +8,7 @@ export const recruitAddService = (recommendData) => {
 export const recruitListService = (params) =>{
     return request.get('/recruit/getMyRecruits', {params:params})
 }
+
+export const reqruitListAllService = (params) => {
+    return request.get('/recruit/getAllRecruits', {params:params})
+}

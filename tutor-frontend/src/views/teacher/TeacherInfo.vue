@@ -38,7 +38,6 @@ const getUserInfo = () => {
 
 getUserInfo()
 
-import { userInfoUpdateService } from '@/api/user'
 import { ElMessage } from 'element-plus'
 import { teacherInfoUpdateService } from '@/api/teacher'
 

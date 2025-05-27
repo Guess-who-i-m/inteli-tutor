@@ -14,6 +14,10 @@ export const recommendUpdateService = (recommendData)=>{
     return request.post('/recommend/updateRecommend',recommendData)
 }
 
+// queryString的调用方式
+export const recommendListAllService = (params) =>{
+    return request.get('/recommend/getAllRecommends', {params:params})
+}
 
 //文章分类删除接口
 // export const recommendDeleteService = (id)=>{
