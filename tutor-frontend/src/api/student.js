@@ -27,3 +27,7 @@ export const studentAvatarUpdateService = (imgUrl) =>{
     
     return request.post('/stuInfo/updateAvatar', imgUrl)
 }
+
+export const studentInfoFromIdService = (stuId) => {
+    return request.get(`/stuInfo/getStuMsgById?stuId=${stuId}`)
+}

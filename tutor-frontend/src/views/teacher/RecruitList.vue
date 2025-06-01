@@ -134,7 +134,8 @@ const recruitList = async () => {
                 time: timeString || '暂无时间安排',                  // 空数据兜底显示
                 schLevel: schMap[recruitData.schLevel],
                 stuLevel: recruitData.stuLevel,
-                detail: recruitData.detail                          // 细节描述
+                detail: recruitData.detail,                         // 细节描述
+                stuId: recruitData.stuId
             };
         });
         
@@ -149,6 +150,50 @@ const recruitList = async () => {
 };
 
 recruitList();
+
+const stuInfoVisible = ref(false)
+
+const stuInfoModel = ref({
+    username: 'zhangsan',
+    gender: 'M',
+    grade: 9,
+    addr: '西大直街92号',
+    phoneNum: '115211',
+})
+
+import {studentInfoFromIdService} from '@/api/student'
+
+const getStuInfo = async (row) => {
+
+    let result = await studentInfoFromIdService(row.stuId)
+
+    const genderMap = {
+            F : '女',
+            M : '男'
+        };
+
+    const gradeMap = {
+            '1' : '小学一年级',
+            '2' : '小学二年级',
+            '3' : '小学三年级',
+            '4' : '小学四年级',
+            '5' : '小学五年级',
+            '6' : '小学六年级',
+            '7' : '初中一年级',
+            '8' : '初中二年级',
+            '9' : '初中三年级',
+            '10' : '高中一年级',
+            '11' : '高中二年级',
+            '12' : '高中三年级',
+        };
+
+    stuInfoModel.value.gender = genderMap[result.data.gender]
+    stuInfoModel.value.grade = gradeMap[result.data.grade]
+    stuInfoModel.value.addr = result.data.addr;
+    stuInfoModel.value.phoneNum = result.data.phoneNum;
+
+    stuInfoVisible.value = true
+}
 
 </script>
 
@@ -216,7 +261,8 @@ recruitList();
                     plain 
                     type="info" 
                     @click="showDetail(row.detail)"></el-button>
-                    <el-button :icon="Star" circle plain type="primary"></el-button>
+
+                    <el-button :icon="Star" circle plain type="primary" @click="getStuInfo(row)"></el-button>
                 </template>
             </el-table-column>
 
@@ -245,6 +291,42 @@ recruitList();
             </span>
         </template>
     </el-dialog>
+
+    <el-dialog v-model="stuInfoVisible" title="学生详细信息" width="500">
+        <el-form :model="stuInfoModel">
+
+            <!-- 添加统一的 label-width 和 input 宽度 -->
+            <el-form-item label="性别" :label-width="formLabelWidth">
+                <el-input 
+                v-model="stuInfoModel.gender" 
+                readonly
+                class="readonly-input"
+                />
+            </el-form-item>
+            <el-form-item label="年级" :label-width="formLabelWidth">
+                <el-input 
+                v-model="stuInfoModel.grade" 
+                readonly
+                class="readonly-input"
+                />
+            </el-form-item>
+            <el-form-item label="家庭住址" :label-width="formLabelWidth">
+                <el-input 
+                v-model="stuInfoModel.addr" 
+                readonly
+                class="readonly-input"
+                />
+            </el-form-item>
+            <el-form-item label="联系方式" :label-width="formLabelWidth">
+                <el-input 
+                v-model="stuInfoModel.phoneNum" 
+                readonly
+                class="readonly-input"
+                />
+            </el-form-item>
+        </el-form>
+  </el-dialog>
+
 
 </template>
 
