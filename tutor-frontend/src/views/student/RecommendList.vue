@@ -1,5 +1,5 @@
 <script setup>
-/*学生端-家教推荐信息一览*/
+/*学生端-家教应聘信息一览*/
 // 目前没来得及做
 // 删除按钮
 // 条件筛选
@@ -19,6 +19,17 @@ const subject = ref('')
 
 // 用户搜索时选中的线上或线下
 const online = ref('')
+
+// 展示细节弹窗
+const detailVisible = ref(false)
+
+const selectedDetail = ref('') // 新增：存储当前选中的详情内容
+// 新增：显示详情的方法
+const showDetail = (detail) => {
+    selectedDetail.value = detail
+    detailVisible.value = true
+}
+
 
 //recommends->categorys
 const recommends = ref([
@@ -281,7 +292,7 @@ const title = ref('')
 
             <el-table-column label="操作" width="150">
                 <template #default="{ row }">
-                    <el-button :icon="Message" circle plain type="info" ></el-button>
+                    <el-button :icon="Message" circle plain type="info" @click="showDetail(row.detail)"></el-button>
                     <el-button :icon="Star" circle plain type="primary" @click="showDrawer(row)"></el-button>
                 </template>
             </el-table-column>
@@ -298,6 +309,16 @@ const title = ref('')
             @current-change="onCurrentChange" style="margin-top: 20px; justify-content: flex-end" />
     
     </el-card>
+
+    <el-dialog v-model="detailVisible" title="详细描述" width="800">
+        <div class="rich-content" v-html="selectedDetail" style="padding: 0 20px; line-height: 1.6"></div>
+
+        <template #footer>
+            <span class="dialog-footer">
+                <el-button @click="detailVisible = false">关闭</el-button>
+            </span>
+        </template>
+    </el-dialog>
 
 </template>
 
@@ -358,4 +379,18 @@ const title = ref('')
     }
 }
 
+
+/* 富文本内容样式 */
+.rich-content :deep(p) {
+  margin: 1em 0;
+}
+.rich-content :deep(ul) {
+  padding-left: 2em;
+}
+.rich-content :deep(pre) {
+  background: #f5f7fa;
+  padding: 1em;
+  border-radius: 4px;
+  overflow: auto;
+}
 </style>

@@ -659,4 +659,18 @@ const deleteRecruit = (row) => {
         min-height: 200px;
     }
 }
+
+/* 富文本内容样式 */
+.rich-content :deep(p) {
+  margin: 1em 0;
+}
+.rich-content :deep(ul) {
+  padding-left: 2em;
+}
+.rich-content :deep(pre) {
+  background: #f5f7fa;
+  padding: 1em;
+  border-radius: 4px;
+  overflow: auto;
+}
 </style>
