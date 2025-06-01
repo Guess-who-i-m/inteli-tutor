@@ -19,7 +19,7 @@ export default defineConfig({
     proxy: {
       '/api':{    // 获取路径包含了/api的请求
         // target:'http://localhost:9999',     // 后台服务所在的源
-        target:'http://39.105.122.87:9999',
+        // target:'http://39.105.122.87:9999',
         changeOrigin: true,                 // 修改源
         // rewrite:(path)=>path.replace(/^\/api/,'') // 将/api替换为空字符串
       }
