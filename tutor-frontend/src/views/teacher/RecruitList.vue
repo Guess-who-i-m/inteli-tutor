@@ -18,6 +18,7 @@ const subject = ref('')
 // 用户搜索时选中的线上或线下
 const online = ref('')
 
+// 展示细节弹窗
 const detailVisible = ref(false)
 
 const selectedDetail = ref('') // 新增：存储当前选中的详情内容

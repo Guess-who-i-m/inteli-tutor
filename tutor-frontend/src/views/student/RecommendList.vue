@@ -158,8 +158,7 @@ const recommendList = async () => {
 
 recommendList();
 
-//控制抽屉是否显示
-const visibleDrawer = ref(false);
+
 
 // 应聘信息数据模型
 const recommendModel = ref({
@@ -219,135 +218,13 @@ const handleTimeChange = (timeValue, field, index) => {
 }
 
 
-// 提交前验证时间有效性
-const validateTimes = () => {
-    for (let i = 0; i < recommendModel.value.time_num; i++) {
-        const start = recommendModel.value.start_times[i];
-        const end = recommendModel.value.end_times[i];
-        
-        if (start >= end) {
-            return `时间组 ${i + 1} 的开始时间必须早于结束时间`;
-        }
-    }
-    return true;
-}
-
 // import { recommendAddService } from '@/api/recommend'
 
-const addRecommend = async() => {
 
-    // 验证时间有效性
-    const timeValid = validateTimes();
-    if (timeValid !== true) {
-        ElMessage.error(timeValid);
-        return;
-    }
-    
-    // 准备提交数据
-    const submitData = {
-        ...recommendModel.value,
-        // 确保数组长度与time_num一致
-        days: recommendModel.value.days.slice(0, recommendModel.value.time_num),
-        start_times: recommendModel.value.start_times.slice(0, recommendModel.value.time_num),
-        end_times: recommendModel.value.end_times.slice(0, recommendModel.value.time_num)
-    };
-
-    // 调用接口
-    console.log(submitData);
-
-    let result = await recommendAddService(submitData);
-
-    ElMessage.success(result.message? result.message : '添加成功')
-
-    // 刷新当前列表
-    recommendList();
-
-    visibleDrawer.value = false;
-}
 
 //定义变量，控制变量的绑定,标题展示
 const title = ref('')
 
-//展示修改抽屉
-const showDrawer = (row) => {
-    visibleDrawer.value = true; title.value = '修改编辑信息'
-    //数据拷贝
-    recommendModel.value.price = row.price;
-    recommendModel.value.subject = row.subject;
-    recommendModel.value.online = row.online === '线上' ? true : false; // 根据显示文本判断
-    recommendModel.value.detail = row.detail;
-    // **修改：根据原始时间数据填充时间相关字段**
-    if (row.originalDates && row.originalDates.length > 0) {
-        recommendModel.value.time_num = row.originalDates.length;
-        recommendModel.value.days = row.originalDates.map(date => date.day.toLowerCase()); // 转换为小写，与 option value 匹配
-        recommendModel.value.start_times = row.originalDates.map(date => date.startTime);
-        recommendModel.value.end_times = row.originalDates.map(date => date.endTime);
-    } else {
-        // 如果没有原始时间数据，则使用默认值
-        recommendModel.value.time_num = 1;
-        recommendModel.value.days = ['mon'];
-        recommendModel.value.start_times = ['08:00:00'];
-        recommendModel.value.end_times = ['17:00:00'];
-    }
-    //扩展 recommendModel的id属性，将来需要传递给后台，完成分类的修改
-    recommendModel.value.recommend_id = row.recommendId
-}
-
-//修改发布信息
-const updateRecommend = async () => {
-    // 验证时间有效性
-    const timeValid = validateTimes();
-    if (timeValid !== true) {
-        ElMessage.error(timeValid);
-        return;
-    }
-    
-    // **根据后端接口文档构建提交数据**
-    const submitData = {
-
-        ...recommendModel.value,
-        // days, start_times, end_times 保持数组 of string 类型
-        days: recommendModel.value.days.slice(0, recommendModel.value.time_num), // 确保长度正确
-        start_times: recommendModel.value.start_times.slice(0, recommendModel.value.time_num), // 确保长度正确
-        end_times: recommendModel.value.end_times.slice(0, recommendModel.value.time_num) // 确保长度正确
-    };
-
-    // 调用接口
-    console.log(submitData);
-
-    //调用接口
-    let result = await recommendUpdateService(recommendModel.value);
-
-    ElMessage.success(result.msg ? result.msg : "修改成功")
-
-    //调用获取所有发布信息的函数
-    recommendList();
-
-    //隐藏弹窗
-    visibleDrawer.value = false;
-}
-
-//清空模型的数据防止回显
-const clearData = () => {
-    // recommendModel.value.price = null;
-    // recommendModel.value.subject = '';
-    // recommendModel.value.online = true;
-    // recommendModel.value.detail = '';
-    // recommendModel.value.time_num = '';
-    // recommendModel.value.days = ['mon'];
-    // recommendModel.value.start_times = ['08:00:00'];
-    // recommendModel.value.end_times = ['17:00:00'];
-    recommendModel.value = {
-        price: null,
-        subject: '',
-        online: null,
-        detail: ' ',
-        time_num: 1,  // 重置为默认1组时间
-        days: ['mon'], // 重置为默认周一
-        start_times: ['08:00:00'], // 重置为默认开始时间
-        end_times: ['17:00:00']   // 重置为默认结束时间
-    };
-}
 
 </script>
 
@@ -421,118 +298,6 @@ const clearData = () => {
             @current-change="onCurrentChange" style="margin-top: 20px; justify-content: flex-end" />
     
     </el-card>
-
-    <!-- 抽屉  添加发布信息弹窗 判断title 复用同一弹窗有回显-->
-    <el-drawer v-model="visibleDrawer" :title="title" direction="rtl" size="50%">
-        <!-- 添加文章表单 -->
-        <el-form :model="recommendModel" label-width="100px">
-            <el-form-item label="辅导科目">
-                <el-select placeholder="请选择" v-model="recommendModel.subject">
-                    <el-option label="语文" value="语文"></el-option>
-                    <el-option label="数学" value="数学"></el-option>
-                    <el-option label="英语" value="英语"></el-option>
-                    <el-option label="物理" value="物理"></el-option>
-                    <el-option label="化学" value="化学"></el-option>
-                    <el-option label="生物" value="生物"></el-option>
-                    <el-option label="历史" value="历史"></el-option>
-                    <el-option label="地理" value="地理"></el-option>
-                    <el-option label="政治" value="政治"></el-option>
-                </el-select>
-            </el-form-item>
-
-            <el-form-item label="辅导形式">
-                <el-select 
-                    placeholder="请选择" 
-                    v-model="recommendModel.online">
-                    <el-option label="线上" value="true"></el-option>
-                    <el-option label="线下" value="false"></el-option>
-                </el-select>
-            </el-form-item>
-
-            <el-form-item label="辅导价格">
-                <el-input 
-                    v-model="recommendModel.price" 
-                    type="number"
-                    placeholder="请输入价格(元/小时)"
-                    @input="handlePriceInput">
-                </el-input>
-            </el-form-item>
-
-            <el-form-item label="详情描述">
-                <div class="editor">
-                    <quill-editor theme="snow" v-model:content="recommendModel.detail" contentType="html">
-                    </quill-editor>
-                </div>
-            </el-form-item>
-
-
-            <!-- 时间组数量 -->
-            <el-form-item label="时间组数" prop="time_num">
-                <el-input-number 
-                    v-model="recommendModel.time_num" 
-                    :min="1" 
-                    :max="7"
-                    @change="handleTimeNumChange"
-                ></el-input-number>
-            </el-form-item>
-            
-            <!-- 动态时间组 -->
-            <div v-for="(item, index) in recommendModel.time_num" :key="index">
-                <el-form-item :label="`时间组 ${index + 1}`">
-                    <el-row :gutter="20">
-                        <!-- 星期选择 -->
-                        <el-col :span="8">
-                            <el-form-item :prop="`days[${index}]`">
-                                <el-select v-model="recommendModel.days[index]" placeholder="选择星期">
-                                    <el-option label="周一" value="mon"></el-option>
-                                    <el-option label="周二" value="tue"></el-option>
-                                    <el-option label="周三" value="wed"></el-option>
-                                    <el-option label="周四" value="thu"></el-option>
-                                    <el-option label="周五" value="fri"></el-option>
-                                    <el-option label="周六" value="sat"></el-option>
-                                    <el-option label="周日" value="sun"></el-option>
-                                </el-select>
-                            </el-form-item>
-                        </el-col>
-                        
-                        <!-- 开始时间 -->
-                        <el-col :span="8">
-                            <el-form-item :prop="`start_times[${index}]`">
-                                <el-time-picker
-                                    v-model="recommendModel.start_times[index]"
-                                    format="HH:mm"          
-                                    value-format="HH:mm:ss" 
-                                    placeholder="开始时间"
-                                    @change="handleTimeChange($event, 'start_times', index)"
-                                ></el-time-picker>
-                            </el-form-item>
-                        </el-col>
-                        
-                        <!-- 结束时间 -->
-                        <el-col :span="8">
-                            <el-form-item :prop="`end_times[${index}]`">
-                                <el-time-picker
-                                v-model="recommendModel.end_times[index]"
-                                format="HH:mm"          
-                                value-format="HH:mm:ss" 
-                                placeholder="结束时间"
-                                @change="handleTimeChange($event, 'end_times', index)"
-                            ></el-time-picker>
-                            </el-form-item>
-                        </el-col>
-                    </el-row>
-                </el-form-item>
-            </div>
-
-            <el-form-item>
-                <el-button type="primary" @click="title == '发布应聘' ? addRecommend() : updateRecommend()">确认</el-button>
-            </el-form-item>
-
-        </el-form>
-
-        <!-- <template></template> -->
-    
-    </el-drawer>
 
 </template>
 

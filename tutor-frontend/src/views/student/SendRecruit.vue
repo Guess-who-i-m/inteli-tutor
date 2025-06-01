@@ -20,6 +20,15 @@ const subject = ref('')
 // 用户搜索时选中的线上或线下
 const online = ref('')
 
+// 展示细节弹窗
+const detailVisible = ref(false)
+
+const selectedDetail = ref('') // 新增：存储当前选中的详情内容
+// 新增：显示详情的方法
+const showDetail = (detail) => {
+  selectedDetail.value = detail
+  detailVisible.value = true
+}
 
 const recruits = ref([
     {
@@ -120,7 +129,7 @@ const recruitList = async () => {
             
             // 返回最终结构 ------------------------------------------------------
             return {
-                recommendId: recruitData.recruitId,             // ID直接传递
+                recruitId: recruitData.recruitId,             // ID直接传递
                 subject: recruitData.subject,                     // 科目直接传递
                 online: recruitData.online ? '线上' : '线下',      // 布尔转中文
                 price: String(recruitData.price),                 // 价格转字符串(显示需要)
@@ -218,7 +227,7 @@ const validateTimes = () => {
     return true;
 }
 
-import { recruitAddService } from '@/api/recruit'
+import { recruitAddService, recruitUpdateService } from '@/api/recruit'
 
 
 const addRecruit = async() => {
@@ -264,6 +273,96 @@ const addRecruit = async() => {
     recruitList();
 }
 
+//定义变量，控制变量的绑定,标题展示
+const title = ref('')
+
+// 展示修改抽屉（适配recruitModel）
+const showDrawer = (row) => {
+    visibleDrawer.value = true;
+    title.value = '修改编辑信息';
+    
+    // 数据拷贝 - 适配recruitModel
+    recruitModel.value = {
+        price: row.price,
+        subject: row.subject,
+        online: row.online === '线上' ? true : false,
+        schLevel: row.schLevel,       // 新增字段
+        stuLevel: row.stuLevel,       // 新增字段
+        detail: row.detail,
+        time_num: 1, // 默认值，下面会覆盖
+        days: ['mon'],
+        start_times: ['08:00:00'],
+        end_times: ['17:00:00']
+    };
+    // 处理时间数据
+    if (row.originalDates && row.originalDates.length > 0) {
+        recruitModel.value.time_num = row.originalDates.length;
+        recruitModel.value.days = row.originalDates.map(date => date.day.toLowerCase());
+        recruitModel.value.start_times = row.originalDates.map(date => date.startTime);
+        recruitModel.value.end_times = row.originalDates.map(date => date.endTime);
+    }
+    
+    // 保存ID用于后续更新
+    recruitModel.value.recruit_id = row.recruitId; // 假设ID字段名称为recruitId
+}
+// 清空模型数据（适配recruitModel）
+const clearData = () => {
+    recruitModel.value = {
+        price: null,
+        subject: '',
+        online: null,
+        schLevel: '',       // 新增字段
+        stuLevel: '',       // 新增字段
+        detail: '',
+        time_num: 1,
+        days: ['mon'],
+        start_times: ['08:00:00'],
+        end_times: ['17:00:00']
+    };
+}
+// 修改发布信息（适配recruitModel）
+const updateRecruit = async () => {
+    // 验证时间有效性（保持原逻辑）
+    const timeValid = validateTimes();
+    if (timeValid !== true) {
+        ElMessage.error(timeValid);
+        return;
+    }
+
+    const schMapReverse = {
+        '985': 'jbw',
+        '211': 'eyy',
+        '双一流': 'syl',
+        '一本': 'yb',
+        '二本': 'eb'
+        };
+    
+    // 构建提交数据
+    const submitData = {
+        ...recruitModel.value,
+        sch_level: schMapReverse[recruitModel.value.schLevel],   // 转换字段
+        stu_level: recruitModel.value.stuLevel,                  // 转换字段
+        days: recruitModel.value.days.slice(0, recruitModel.value.time_num),
+        start_times: recruitModel.value.start_times.slice(0, recruitModel.value.time_num),
+        end_times: recruitModel.value.end_times.slice(0, recruitModel.value.time_num)
+    };
+    // 删除原有的schLevel和stuLevel字段
+    delete submitData.schLevel;
+    delete submitData.stuLevel;
+
+
+    // 调用接口（假设有对应的recruitUpdateService）
+    console.log(submitData);
+
+    let result = await recruitUpdateService(submitData);
+    ElMessage.success(result.msg || "修改成功");
+    
+    // 刷新列表
+    recruitList();
+    
+    // 关闭抽屉
+    visibleDrawer.value = false;
+}
 </script>
 
 
@@ -275,7 +374,7 @@ const addRecruit = async() => {
             <div class="header">
                 <span>招聘信息发布与管理</span>
                 <div class="extra">
-                    <el-button type="primary" @click="visibleDrawer = true">发布招聘</el-button>
+                    <el-button type="primary" @click="visibleDrawer = true; title='发布招聘信息'; clearData()">发布招聘</el-button>
                 </div>
             </div>
         </template>
@@ -326,8 +425,14 @@ const addRecruit = async() => {
 
             <el-table-column label="操作" width="150">
                 <template #default="{ row }">
-                    <el-button :icon="Message" circle plain type="info"></el-button>
-                    <el-button :icon="Edit" circle plain type="primary"></el-button>
+                    <el-button 
+                        :icon="Message" 
+                        circle 
+                        plain 
+                        type="info" 
+                        @click="showDetail(row.detail)">
+                    </el-button> 
+                    <el-button :icon="Edit" circle plain type="primary" @click="showDrawer(row)"></el-button>
                     <el-button :icon="Delete" circle plain type="danger"></el-button>
                 </template>
             </el-table-column>
@@ -346,7 +451,7 @@ const addRecruit = async() => {
     </el-card>
 
     <!-- 抽屉 -->
-    <el-drawer v-model="visibleDrawer" title="发布招聘信息" direction="rtl" size="50%">
+    <el-drawer v-model="visibleDrawer" :title="title" direction="rtl" size="50%">
         <!-- 添加文章表单 -->
         <el-form :model="recruitModel" label-width="100px">
             <el-form-item label="辅导科目">
@@ -468,12 +573,25 @@ const addRecruit = async() => {
             </div>
 
             <el-form-item>
-                <el-button type="primary" @click="addRecruit()">发布</el-button>
+                <el-button type="primary" @click="title == '发布应聘' ? addRecruit() : updateRecruit()">确认</el-button>
             </el-form-item>
 
         </el-form>
     
     </el-drawer>
+
+    <el-dialog v-model="detailVisible" title="详细描述" width="800">
+        <div 
+            class="rich-content" 
+            v-html="selectedDetail"
+            style="padding: 0 20px; line-height: 1.6"></div>
+        
+        <template #footer>
+            <span class="dialog-footer">
+            <el-button @click="detailVisible = false">关闭</el-button>
+            </span>
+        </template>
+    </el-dialog>
 
 </template>
 

@@ -1,7 +1,7 @@
 import request from '@/utils/request.js'
 
-export const recruitAddService = (recommendData) => {
-    return request.post("/recruit/publishRecruit", recommendData)
+export const recruitAddService = (recruitData) => {
+    return request.post("/recruit/publishRecruit", recruitData)
 }
 
 // queryString的调用方式
@@ -11,4 +11,9 @@ export const recruitListService = (params) =>{
 
 export const reqruitListAllService = (params) => {
     return request.get('/recruit/getAllRecruits', {params:params})
+}
+
+//文章分类修改接口
+export const recruitUpdateService = (recruitData)=>{
+    return request.post('/recruit/updateRecruit',recruitData)
 }
