@@ -83,7 +83,7 @@ const onCurrentChange = (num) => {
 
 
 
-import { recommendListService} from '@/api/recommend'
+import { recommendListAllService} from '@/api/recommend'
 
 // 异步获取推荐列表数据并处理
 const recommendList = async () => {
@@ -97,7 +97,7 @@ const recommendList = async () => {
         // online: online.value ? online.value : null,
     }
     // 调用推荐列表服务获取数据
-    let result = await recommendListService(params);
+    let result = await recommendListAllService(params);
     // 数据处理流程
     if (result.data && result.data.items) {
         // 更新总数据条数（用于分页显示）

@@ -61,7 +61,7 @@ const onCurrentChange = (num) => {
 
 const editorKey = ref(0) // 用于强制刷新编辑器
 
-import { recruitListService } from '@/api/recruit'
+import { recruitListService, recruitAddService, recruitDeleteService, recruitUpdateService} from '@/api/recruit'
 
 // 异步获取招聘列表数据并处理
 const recruitList = async () => {
