@@ -17,3 +17,8 @@ export const reqruitListAllService = (params) => {
 export const recruitUpdateService = (recruitData)=>{
     return request.post('/recruit/updateRecruit',recruitData)
 }
+
+//文章分类删除接口
+export const recruitDeleteService = (json)=>{
+    return request.post('/recruit/deleteRecruit',json)
+}
