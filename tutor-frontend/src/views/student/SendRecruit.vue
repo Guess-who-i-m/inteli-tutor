@@ -59,6 +59,8 @@ const onCurrentChange = (num) => {
     recruitList();
 }
 
+const editorKey = ref(0) // 用于强制刷新编辑器
+
 import { recruitListService } from '@/api/recruit'
 
 // 异步获取招聘列表数据并处理
@@ -165,7 +167,7 @@ const recruitModel = ref({
     time_num: 1,  
     days: ['mon'], 
     start_times: ['08:00:00'], 
-    end_times: ['17:00:00']   
+    end_times: ['17:00:00'],
 })
 
 import { QuillEditor } from '@vueup/vue-quill'
@@ -304,9 +306,11 @@ const showDrawer = (row) => {
     
     // 保存ID用于后续更新
     recruitModel.value.recruit_id = row.recruitId; // 假设ID字段名称为recruitId
+
 }
 // 清空模型数据（适配recruitModel）
 const clearData = () => {
+    editorKey.value++ // 强制刷新编辑器
     recruitModel.value = {
         price: null,
         subject: '',
@@ -508,7 +512,7 @@ const updateRecruit = async () => {
 
             <el-form-item label="详情描述">
                 <div class="editor">
-                    <quill-editor theme="snow" v-model:content="recruitModel.detail" contentType="html">
+                    <quill-editor theme="snow" v-model:content="recruitModel.detail" contentType="html" :key="editorKey">
                     </quill-editor>
                 </div>
             </el-form-item>
@@ -573,7 +577,7 @@ const updateRecruit = async () => {
             </div>
 
             <el-form-item>
-                <el-button type="primary" @click="title == '发布应聘' ? addRecruit() : updateRecruit()">确认</el-button>
+                <el-button type="primary" @click="title == '发布应聘' ? addRecruit() : updateRecruit(); clearData();">确认</el-button>
             </el-form-item>
 
         </el-form>

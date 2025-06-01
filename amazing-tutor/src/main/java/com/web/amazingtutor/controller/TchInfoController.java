@@ -96,7 +96,7 @@ public class TchInfoController {
         }
     }
 
-    @GetMapping("getTchMsg")
+    @GetMapping("/getTchMsg")
     public R<TchInfo> getTchMsg(){
         // 从threadLocal里面获得键值对
         Map<String, Object> map = ThreadLocalUtil.get();
@@ -115,6 +115,18 @@ public class TchInfoController {
             tchInfoService.save(tchInfo);
             res = tchInfoService.getOne(queryWrapper);
         }
+
+        // 将查询结果返回
+        return R.success(res);
+    }
+
+    @GetMapping("/getTchMsgById")
+    public R<TchInfo> getTchMsgById(@RequestParam Integer tchId){
+
+        // 查询对应tch_id的信息
+        QueryWrapper<TchInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("tch_id", tchId);
+        TchInfo res = tchInfoService.getOne(queryWrapper);
 
         // 将查询结果返回
         return R.success(res);

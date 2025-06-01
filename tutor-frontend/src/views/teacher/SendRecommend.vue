@@ -71,7 +71,7 @@ const onCurrentChange = (num) => {
     recommendList();
 }
 
-
+const editorKey = ref(0) // 用于强制刷新编辑器
 
 import { recommendListService,recommendAddService, recommendUpdateService, recommendDeleteService} from '@/api/recommend'
 
@@ -323,6 +323,9 @@ const clearData = () => {
     // recommendModel.value.days = ['mon'];
     // recommendModel.value.start_times = ['08:00:00'];
     // recommendModel.value.end_times = ['17:00:00'];
+
+    editorKey.value++ // 强制刷新编辑器
+
     recommendModel.value = {
         price: null,
         subject: '',
@@ -480,7 +483,7 @@ const deleteRecommend = (row) => {
 
             <el-form-item label="详情描述">
                 <div class="editor">
-                    <quill-editor theme="snow" v-model:content="recommendModel.detail" contentType="html">
+                    <quill-editor theme="snow" v-model:content="recommendModel.detail" contentType="html" :key="editorKey">
                     </quill-editor>
                 </div>
             </el-form-item>

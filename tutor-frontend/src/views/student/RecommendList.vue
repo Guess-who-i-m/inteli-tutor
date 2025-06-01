@@ -6,8 +6,6 @@
 // 显示detail
 
 import {
-    Edit,
-    Delete,
     Message,
     Star
 } from '@element-plus/icons-vue'
@@ -74,7 +72,7 @@ const onCurrentChange = (num) => {
 
 
 
-import { recommendListService,recommendAddService, recommendUpdateService} from '@/api/recommend'
+import { recommendListService} from '@/api/recommend'
 
 // 异步获取推荐列表数据并处理
 const recommendList = async () => {
@@ -141,6 +139,7 @@ const recommendList = async () => {
                 price: String(recommendData.price),                 // 价格转字符串(显示需要)
                 time: timeString || '暂无时间安排',                  // 空数据兜底显示
                 detail: recommendData.detail,
+                tchId: recommendData.tchId,
                 // **新增：保留原始的时间数据数组**
                 originalDates: dates // 将原始的 recommendDates 数组添加到 row 对象中               
             };
@@ -158,73 +157,52 @@ const recommendList = async () => {
 
 recommendList();
 
+const tchInfoVisible = ref(false)
 
-
-// 应聘信息数据模型
-const recommendModel = ref({
-    price:null,
-    subject:'',
-    online:null,
-    detail:'',
-    time_num: 1,  
-    days: ['mon'], 
-    start_times: ['08:00:00'], 
-    end_times: ['17:00:00']   
+const tchInfoModel = ref({
+    username: 'zhangsan',
+    gender: 'M',
+    school: '哈尔滨工业大学',
+    schLevel: 'jbw',
+    eduBg: 'bachelor',
+    phoneNum: '24223414'
 })
 
-import { QuillEditor } from '@vueup/vue-quill'
-import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import { teacherInfoFromIdService } from '@/api/teacher'
 
-import { ElMessage } from 'element-plus'
+const getTchInfo = async (row) => {
+    
+    let result = await teacherInfoFromIdService(row.tchId);
+    console.log(result);
 
+    const schLevelMap = {
+            jbw: '985',
+            eyy: '211',
+            syl: '双一流',
+            yb: '一本',
+            eb: '二本'
+        };
 
+    const genderMap = {
+            F : '女',
+            M : '男'
+        };
 
-// 处理价格输入，确保为整数
-const handlePriceInput = (value) => {
-    recommendModel.value.price = value ? parseInt(value) || 0 : null;
+    const eduBgMap = {
+            bachelor:'本科',
+            master:'硕士',
+            doctor:'博士'
+        };
+    
+    tchInfoModel.value.gender = genderMap[result.data.gender]
+    tchInfoModel.value.school = result.data.school
+    tchInfoModel.value.schLevel = schLevelMap[result.data.schLevel]
+    tchInfoModel.value.eduBg = eduBgMap[result.data.eduBg]
+    tchInfoModel.value.phoneNum = result.data.phoneNum
+
+    tchInfoVisible.value = true;
+    
 }
-
-// 处理时间组数量变化
-const handleTimeNumChange = (newVal) => {
-    // 处理数组长度变化
-    if (newVal > recommendModel.value.days.length) {
-        // 增加
-        const addCount = newVal - recommendModel.value.days.length;
-        for (let i = 0; i < addCount; i++) {
-            recommendModel.value.days.push('mon');
-            recommendModel.value.start_times.push('08:00:00');
-            recommendModel.value.end_times.push('17:00:00');
-        }
-    } else {
-        // 减少
-        recommendModel.value.days = recommendModel.value.days.slice(0, newVal);
-        recommendModel.value.start_times = recommendModel.value.start_times.slice(0, newVal);
-        recommendModel.value.end_times = recommendModel.value.end_times.slice(0, newVal);
-    }
-}
-
-const handleTimeChange = (timeValue, field, index) => {
-    if (timeValue) {
-        // 确保秒数始终为00
-        const parts = timeValue.split(':');
-        if (parts.length === 2) {
-            // 如果只有HH:MM格式，补全SS
-            recommendModel.value[field][index] = `${timeValue}:00`;
-        } else if (parts.length === 3) {
-            // 如果已经是HH:MM:SS格式，确保SS为00
-            recommendModel.value[field][index] = `${parts[0]}:${parts[1]}:00`;
-        }
-    }
-}
-
-
-// import { recommendAddService } from '@/api/recommend'
-
-
-
-//定义变量，控制变量的绑定,标题展示
-const title = ref('')
-
 
 </script>
 
@@ -282,7 +260,7 @@ const title = ref('')
             <el-table-column label="操作" width="150">
                 <template #default="{ row }">
                     <el-button :icon="Message" circle plain type="info" ></el-button>
-                    <el-button :icon="Star" circle plain type="primary" @click="showDrawer(row)"></el-button>
+                    <el-button :icon="Star" circle plain type="primary" @click="getTchInfo(row)"></el-button>
                 </template>
             </el-table-column>
 
@@ -298,6 +276,48 @@ const title = ref('')
             @current-change="onCurrentChange" style="margin-top: 20px; justify-content: flex-end" />
     
     </el-card>
+
+    <el-dialog v-model="tchInfoVisible" title="教师详细信息" width="500">
+        <el-form :model="tchInfoModel">
+
+            <!-- 添加统一的 label-width 和 input 宽度 -->
+            <el-form-item label="性别" :label-width="formLabelWidth">
+                <el-input 
+                v-model="tchInfoModel.gender" 
+                readonly
+                class="readonly-input"
+                />
+            </el-form-item>
+            <el-form-item label="学校" :label-width="formLabelWidth">
+                <el-input 
+                v-model="tchInfoModel.school" 
+                readonly
+                class="readonly-input"
+                />
+            </el-form-item>
+            <el-form-item label="学校层次" :label-width="formLabelWidth">
+                <el-input 
+                v-model="tchInfoModel.schLevel" 
+                readonly
+                class="readonly-input"
+                />
+            </el-form-item>
+            <el-form-item label="学历层次" :label-width="formLabelWidth">
+                <el-input 
+                v-model="tchInfoModel.eduBg" 
+                readonly
+                class="readonly-input"
+                />
+            </el-form-item>
+            <el-form-item label="联系方式" :label-width="formLabelWidth">
+                <el-input 
+                v-model="tchInfoModel.phoneNum" 
+                readonly
+                class="readonly-input"
+                />
+            </el-form-item>
+        </el-form>
+  </el-dialog>
 
 </template>
 
@@ -357,5 +377,7 @@ const title = ref('')
         min-height: 200px;
     }
 }
+
+
 
 </style>

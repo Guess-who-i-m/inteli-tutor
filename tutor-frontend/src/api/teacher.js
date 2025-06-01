@@ -27,3 +27,7 @@ export const teacherAvatarUpdateService = (imgUrl) =>{
     
     return request.post('/tchInfo/updateAvatar', imgUrl)
 }
+
+export const teacherInfoFromIdService = (tchId) => {
+    return request.get(`/tchInfo/getTchMsgById?tchId=${tchId}`)
+}
