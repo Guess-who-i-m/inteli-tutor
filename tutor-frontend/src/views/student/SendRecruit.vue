@@ -133,12 +133,13 @@ const recruitList = async () => {
             return {
                 recruitId: recruitData.recruitId,             // ID直接传递
                 subject: recruitData.subject,                     // 科目直接传递
-                online: recruitData.online ? '线上' : '线下',      // 布尔转中文
+                online: recruitData.online,      // 布尔转中文
                 price: String(recruitData.price),                 // 价格转字符串(显示需要)
                 time: timeString || '暂无时间安排',                  // 空数据兜底显示
-                schLevel: schMap[recruitData.schLevel],
+                schLevel: recruitData.schLevel,
                 stuLevel: recruitData.stuLevel,
-                detail: recruitData.detail                          // 细节描述
+                detail: recruitData.detail,                          // 细节描述
+                originalDates: dates // 将原始的 recommendDates 数组添加到 row 对象中  
             };
         });
 
@@ -287,7 +288,7 @@ const showDrawer = (row) => {
     recruitModel.value = {
         price: row.price,
         subject: row.subject,
-        online: row.online === '线上' ? true : false,
+        online: row.online,
         schLevel: row.schLevel,       // 新增字段
         stuLevel: row.stuLevel,       // 新增字段
         detail: row.detail,
@@ -324,6 +325,15 @@ const clearData = () => {
         end_times: ['17:00:00']
     };
 }
+
+const schMap = {
+        jbw : '985',
+        eyy : '211',
+        syl : '双一流',
+        yb : '一本',
+        eb: '二本'
+    };
+    
 // 修改发布信息（适配recruitModel）
 const updateRecruit = async () => {
     // 验证时间有效性（保持原逻辑）
@@ -333,18 +343,12 @@ const updateRecruit = async () => {
         return;
     }
 
-    const schMapReverse = {
-        '985': 'jbw',
-        '211': 'eyy',
-        '双一流': 'syl',
-        '一本': 'yb',
-        '二本': 'eb'
-    };
+    
 
     // 构建提交数据
     const submitData = {
         ...recruitModel.value,
-        sch_level: schMapReverse[recruitModel.value.schLevel],   // 转换字段
+        sch_level: recruitModel.value.schLevel,   // 转换字段
         stu_level: recruitModel.value.stuLevel,                  // 转换字段
         days: recruitModel.value.days.slice(0, recruitModel.value.time_num),
         start_times: recruitModel.value.start_times.slice(0, recruitModel.value.time_num),
@@ -452,9 +456,17 @@ const deleteRecruit = (row) => {
 
             <el-table-column label="辅导价格" prop="price"></el-table-column>
 
-            <el-table-column label="辅导形式" prop="online"> </el-table-column>
+            <el-table-column label="辅导形式">
+                <template #default="scope">
+                {{ scope.row.online ? '线上' : '线下' }}
+                </template>
+            </el-table-column>
 
-            <el-table-column label="教师要求" prop="schLevel"> </el-table-column>
+            <el-table-column label="教师要求"> 
+                <template #default="scope">
+                {{ schMap[scope.row.schLevel] }}
+                </template>
+            </el-table-column>
 
             <el-table-column label="学生水平" prop="stuLevel"> </el-table-column>
 
@@ -502,8 +514,8 @@ const deleteRecruit = (row) => {
 
             <el-form-item label="辅导形式">
                 <el-select placeholder="请选择" v-model="recruitModel.online">
-                    <el-option label="线上" value="true"></el-option>
-                    <el-option label="线下" value="false"></el-option>
+                    <el-option label="线上" :value="true"></el-option>
+                    <el-option label="线下" :value="false"></el-option>
                 </el-select>
             </el-form-item>
 

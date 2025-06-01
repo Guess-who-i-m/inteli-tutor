@@ -476,8 +476,8 @@ const deleteRecommend = (row) => {
 
             <el-form-item label="辅导形式">
                 <el-select placeholder="请选择" v-model="recommendModel.online">
-                    <el-option label="线上" value="true"></el-option>
-                    <el-option label="线下" value="false"></el-option>
+                    <el-option label="线上" :value="true"></el-option>
+                    <el-option label="线下" :value="false"></el-option>
                 </el-select>
             </el-form-item>
 
