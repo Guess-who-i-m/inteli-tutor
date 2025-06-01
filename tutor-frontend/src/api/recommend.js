@@ -20,9 +20,9 @@ export const recommendListAllService = (params) =>{
 }
 
 //文章分类删除接口
-// export const recommendDeleteService = (id)=>{
-//     return request.delete('/category?id='+id)
-// }
+export const recommendDeleteService = (json)=>{
+    return request.post('/recommend/deleteRecommend',json)
+}
 
 
 

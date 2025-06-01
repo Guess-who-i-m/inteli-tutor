@@ -73,7 +73,7 @@ const onCurrentChange = (num) => {
 
 
 
-import { recommendListService,recommendAddService, recommendUpdateService} from '@/api/recommend'
+import { recommendListService,recommendAddService, recommendUpdateService, recommendDeleteService} from '@/api/recommend'
 
 // 异步获取推荐列表数据并处理
 const recommendList = async () => {
@@ -299,20 +299,7 @@ const updateRecommend = async () => {
     if (timeValid !== true) {
         ElMessage.error(timeValid);
         return;
-    }
-    
-    // **根据后端接口文档构建提交数据**
-    const submitData = {
-
-        ...recommendModel.value,
-        // days, start_times, end_times 保持数组 of string 类型
-        days: recommendModel.value.days.slice(0, recommendModel.value.time_num), // 确保长度正确
-        start_times: recommendModel.value.start_times.slice(0, recommendModel.value.time_num), // 确保长度正确
-        end_times: recommendModel.value.end_times.slice(0, recommendModel.value.time_num) // 确保长度正确
-    };
-
-    // 调用接口
-    console.log(submitData);
+    }   
 
     //调用接口
     let result = await recommendUpdateService(recommendModel.value);
@@ -346,6 +333,36 @@ const clearData = () => {
         start_times: ['08:00:00'], // 重置为默认开始时间
         end_times: ['17:00:00']   // 重置为默认结束时间
     };
+}
+
+//删除分类
+import { ElMessageBox } from "element-plus"
+const deleteRecommend = (row) => {
+    //提示用户 确认框
+    ElMessageBox.confirm(
+        '你确定要删除分类信息吗？',
+        '温馨提示',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+    .then(async () => {
+        //调用接口
+        const json = {recommend_id: row.recommendId};
+        console.log(json);
+        let result = await recommendDeleteService(json);
+        ElMessage.success(result.msg ? result.msg : "删除成功");
+        //刷新列表
+        recommendList();
+    })
+    .catch(() => {
+        ElMessage({
+            type: 'info',
+            message: '用户取消了删除',
+        })
+    })
 }
 
 </script>
@@ -408,7 +425,7 @@ const clearData = () => {
                 <template #default="{ row }">
                     <el-button :icon="Message" circle plain type="info" ></el-button>
                     <el-button :icon="Edit" circle plain type="primary" @click="showDrawer(row)"></el-button>
-                    <el-button :icon="Delete" circle plain type="danger"></el-button>
+                    <el-button :icon="Delete" circle plain type="danger" @click="deleteRecommend(row)"></el-button>
                 </template>
             </el-table-column>
 

@@ -198,10 +198,19 @@ public class RecommendController {
     @PostMapping("/deleteRecommend")
     public R<String> deleteRecommend(@RequestBody String json) {
         ObjectMapper mapper = new ObjectMapper();
-        JsonNode jsonNode = mapper.convertValue(json, JsonNode.class);
-        int recommendId = jsonNode.get("recommend_id").asInt();
+        int recommendId = 0;
 
-        // 删除日期记录
+        log.info(json);
+
+        JsonNode jsonNode = null;
+        try {
+            jsonNode = mapper.readTree(json);
+            recommendId = jsonNode.get("recommend_id").asInt();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+      // 删除日期记录
         QueryWrapper<RecommendDate> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("recommend_id", recommendId);
         recommendDateService.remove(queryWrapper);
