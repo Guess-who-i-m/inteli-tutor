@@ -1,5 +1,5 @@
 <script setup>
-
+/*学生端-招聘信息发布与管理*/
 // 目前没来得及做
 // 删除按钮
 // 条件筛选
@@ -26,8 +26,8 @@ const detailVisible = ref(false)
 const selectedDetail = ref('') // 新增：存储当前选中的详情内容
 // 新增：显示详情的方法
 const showDetail = (detail) => {
-  selectedDetail.value = detail
-  detailVisible.value = true
+    selectedDetail.value = detail
+    detailVisible.value = true
 }
 
 const recruits = ref([
@@ -36,10 +36,10 @@ const recruits = ref([
         "subject": "语文",
         "online": "线上",
         "price": "100",
-        "schLevel":"九八五",
-        "stuLevel":"A",
+        "schLevel": "九八五",
+        "stuLevel": "A",
         "time": "星期一 19:00-21:00, 星期三 20:00-22:00",
-        "detail":"这是一则有关描述"
+        "detail": "这是一则有关描述"
     }
 ])
 
@@ -95,40 +95,40 @@ const recruitList = async () => {
             jbw: '985',
             eyy: '211',
             syl: '双一流',
-            yb:  '一本',
-            eb:  '二本'
+            yb: '一本',
+            eb: '二本'
         }
 
         // 转换数据结构：将后端数据转换为前端需要的格式
         recruits.value = result.data.items.map(item => {
             // 基础数据：从招聘主体数据中提取
             const recruitData = item.recruit;
-            
+
             // 处理时间数据 ------------------------------------------------------
             // 安全处理：确保dates变量始终是数组（防止undefined/null导致.map报错）
             // 注意：如果recommendDates是字符串需要先转换，此处假设已修复后端返回格式
             const dates = item.recruitDates || [];  // 空数组兜底
-            
+
             // 构建时间显示字符串
             const timeString = dates
                 .map(dateObj => {
                     // 转换星期显示：将英文缩写转为中文
                     // 安全处理：转换小写 + 默认显示原始值（防止未知值导致显示异常）
                     const dayName = dayMap[dateObj.day.toLowerCase()] || dateObj.day;
-                    
+
                     // 时间格式处理：截取HH:MM部分（假设后端返回格式为HH:mm:ss）
-                    const startTime = dateObj.startTime 
+                    const startTime = dateObj.startTime
                         ? dateObj.startTime.substring(0, 5)  // 截取前5位(08:00)
                         : 'N/A';  // 异常兜底
-                    const endTime = dateObj.endTime 
-                        ? dateObj.endTime.substring(0, 5) 
+                    const endTime = dateObj.endTime
+                        ? dateObj.endTime.substring(0, 5)
                         : 'N/A';
-                        
+
                     // 返回单条时间信息格式：e.g. "星期一 08:00-17:00"
                     return `${dayName} ${startTime}-${endTime}`;
                 })
                 .join(', ');  // 多条用逗号分隔
-            
+
             // 返回最终结构 ------------------------------------------------------
             return {
                 recruitId: recruitData.recruitId,             // ID直接传递
@@ -141,7 +141,7 @@ const recruitList = async () => {
                 detail: recruitData.detail                          // 细节描述
             };
         });
-        
+
         // 调试输出：在控制台显示转换后的数据结构
         console.log("转换后的招聘数据:", recruits.value);
     } else {
@@ -158,16 +158,16 @@ recruitList();
 const visibleDrawer = ref(false);
 
 const recruitModel = ref({
-    price:null,
-    subject:'',
-    online:null,
-    schLevel:'',
-    stuLevel:'',
-    detail:'',
-    time_num: 1,  
-    days: ['mon'], 
-    start_times: ['08:00:00'], 
-    end_times: ['17:00:00'],
+    price: null,
+    subject: '',
+    online: null,
+    schLevel: '',
+    stuLevel: '',
+    detail: '',
+    time_num: 1,
+    days: ['mon'],
+    start_times: ['08:00:00'],
+    end_times: ['17:00:00']
 })
 
 import { QuillEditor } from '@vueup/vue-quill'
@@ -221,7 +221,7 @@ const validateTimes = () => {
     for (let i = 0; i < recruitModel.value.time_num; i++) {
         const start = recruitModel.value.start_times[i];
         const end = recruitModel.value.end_times[i];
-        
+
         if (start >= end) {
             return `时间组 ${i + 1} 的开始时间必须早于结束时间`;
         }
@@ -229,18 +229,18 @@ const validateTimes = () => {
     return true;
 }
 
-import { recruitAddService, recruitUpdateService } from '@/api/recruit'
+// import { recruitAddService, recruitUpdateService } from '@/api/recruit'
 
 
-const addRecruit = async() => {
-    
+const addRecruit = async () => {
+
     // 验证时间有效性
     const timeValid = validateTimes();
     if (timeValid !== true) {
         ElMessage.error(timeValid);
         return;
     }
-    
+
     // 准备提交数据
     const submitData = {
         ...recruitModel.value,
@@ -255,7 +255,7 @@ const addRecruit = async() => {
 
     let result = await recruitAddService(submitData);
 
-    ElMessage.success(result.message? result.message : '添加成功')
+    ElMessage.success(result.message ? result.message : '添加成功')
 
     visibleDrawer.value = false;
 
@@ -282,7 +282,7 @@ const title = ref('')
 const showDrawer = (row) => {
     visibleDrawer.value = true;
     title.value = '修改编辑信息';
-    
+
     // 数据拷贝 - 适配recruitModel
     recruitModel.value = {
         price: row.price,
@@ -303,7 +303,7 @@ const showDrawer = (row) => {
         recruitModel.value.start_times = row.originalDates.map(date => date.startTime);
         recruitModel.value.end_times = row.originalDates.map(date => date.endTime);
     }
-    
+
     // 保存ID用于后续更新
     recruitModel.value.recruit_id = row.recruitId; // 假设ID字段名称为recruitId
 
@@ -339,8 +339,8 @@ const updateRecruit = async () => {
         '双一流': 'syl',
         '一本': 'yb',
         '二本': 'eb'
-        };
-    
+    };
+
     // 构建提交数据
     const submitData = {
         ...recruitModel.value,
@@ -360,12 +360,44 @@ const updateRecruit = async () => {
 
     let result = await recruitUpdateService(submitData);
     ElMessage.success(result.msg || "修改成功");
-    
+
     // 刷新列表
     recruitList();
-    
+
     // 关闭抽屉
     visibleDrawer.value = false;
+}
+
+
+
+//删除分类
+import { ElMessageBox } from "element-plus"
+const deleteRecruit = (row) => {
+    //提示用户 确认框
+    ElMessageBox.confirm(
+        '你确定要删除招聘信息吗？',
+        '温馨提示',
+        {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning',
+        }
+    )
+        .then(async () => {
+            //调用接口
+            const json = { recruit_id: row.recruitId };
+            console.log(json);
+            let result = await recruitDeleteService(json);
+            ElMessage.success(result.msg ? result.msg : "删除成功");
+            //刷新列表
+            recruitList();
+        })
+        .catch(() => {
+            ElMessage({
+                type: 'info',
+                message: '用户取消了删除',
+            })
+        })
 }
 </script>
 
@@ -373,12 +405,13 @@ const updateRecruit = async () => {
 
 <template>
     <el-card class="page-container">
-        
+
         <template #header>
             <div class="header">
                 <span>招聘信息发布与管理</span>
                 <div class="extra">
-                    <el-button type="primary" @click="visibleDrawer = true; title='发布招聘信息'; clearData()">发布招聘</el-button>
+                    <el-button type="primary"
+                        @click="visibleDrawer = true; title = '发布招聘信息'; clearData()">发布招聘</el-button>
                 </div>
             </div>
         </template>
@@ -429,15 +462,10 @@ const updateRecruit = async () => {
 
             <el-table-column label="操作" width="150">
                 <template #default="{ row }">
-                    <el-button 
-                        :icon="Message" 
-                        circle 
-                        plain 
-                        type="info" 
-                        @click="showDetail(row.detail)">
-                    </el-button> 
+                    <el-button :icon="Message" circle plain type="info" @click="showDetail(row.detail)">
+                    </el-button>
                     <el-button :icon="Edit" circle plain type="primary" @click="showDrawer(row)"></el-button>
-                    <el-button :icon="Delete" circle plain type="danger"></el-button>
+                    <el-button :icon="Delete" circle plain type="danger" @click="deleteRecruit(row)"></el-button>
                 </template>
             </el-table-column>
 
@@ -451,7 +479,7 @@ const updateRecruit = async () => {
         <el-pagination v-model:current-page="pageNum" v-model:page-size="pageSize" :page-sizes="[3, 5, 10, 15]"
             layout="jumper, total, sizes, prev, pager, next" background :total="total" @size-change="onSizeChange"
             @current-change="onCurrentChange" style="margin-top: 20px; justify-content: flex-end" />
-    
+
     </el-card>
 
     <!-- 抽屉 -->
@@ -473,9 +501,7 @@ const updateRecruit = async () => {
             </el-form-item>
 
             <el-form-item label="辅导形式">
-                <el-select 
-                    placeholder="请选择" 
-                    v-model="recruitModel.online">
+                <el-select placeholder="请选择" v-model="recruitModel.online">
                     <el-option label="线上" value="true"></el-option>
                     <el-option label="线下" value="false"></el-option>
                 </el-select>
@@ -502,10 +528,7 @@ const updateRecruit = async () => {
             </el-form-item>
 
             <el-form-item label="辅导价格">
-                <el-input 
-                    v-model="recruitModel.price" 
-                    type="number"
-                    placeholder="请输入价格(元/小时)"
+                <el-input v-model="recruitModel.price" type="number" placeholder="请输入价格(元/小时)"
                     @input="handlePriceInput">
                 </el-input>
             </el-form-item>
@@ -520,14 +543,10 @@ const updateRecruit = async () => {
 
             <!-- 时间组数量 -->
             <el-form-item label="时间组数" prop="time_num">
-                <el-input-number 
-                    v-model="recruitModel.time_num" 
-                    :min="1" 
-                    :max="7"
-                    @change="handleTimeNumChange"
-                ></el-input-number>
+                <el-input-number v-model="recruitModel.time_num" :min="1" :max="7"
+                    @change="handleTimeNumChange"></el-input-number>
             </el-form-item>
-            
+
             <!-- 动态时间组 -->
             <div v-for="(item, index) in recruitModel.time_num" :key="index">
                 <el-form-item :label="`时间组 ${index + 1}`">
@@ -546,30 +565,22 @@ const updateRecruit = async () => {
                                 </el-select>
                             </el-form-item>
                         </el-col>
-                        
+
                         <!-- 开始时间 -->
                         <el-col :span="8">
                             <el-form-item :prop="`start_times[${index}]`">
-                                <el-time-picker
-                                    v-model="recruitModel.start_times[index]"
-                                    format="HH:mm"          
-                                    value-format="HH:mm:ss" 
-                                    placeholder="开始时间"
-                                    @change="handleTimeChange($event, 'start_times', index)"
-                                ></el-time-picker>
+                                <el-time-picker v-model="recruitModel.start_times[index]" format="HH:mm"
+                                    value-format="HH:mm:ss" placeholder="开始时间"
+                                    @change="handleTimeChange($event, 'start_times', index)"></el-time-picker>
                             </el-form-item>
                         </el-col>
-                        
+
                         <!-- 结束时间 -->
                         <el-col :span="8">
                             <el-form-item :prop="`end_times[${index}]`">
-                                <el-time-picker
-                                v-model="recruitModel.end_times[index]"
-                                format="HH:mm"          
-                                value-format="HH:mm:ss" 
-                                placeholder="结束时间"
-                                @change="handleTimeChange($event, 'end_times', index)"
-                            ></el-time-picker>
+                                <el-time-picker v-model="recruitModel.end_times[index]" format="HH:mm"
+                                    value-format="HH:mm:ss" placeholder="结束时间"
+                                    @change="handleTimeChange($event, 'end_times', index)"></el-time-picker>
                             </el-form-item>
                         </el-col>
                     </el-row>
@@ -577,22 +588,19 @@ const updateRecruit = async () => {
             </div>
 
             <el-form-item>
-                <el-button type="primary" @click="title == '发布招聘信息' ? addRecruit() : updateRecruit(); clearData();">确认</el-button>
+                <el-button type="primary" @click="title == '发布招聘信息' ? addRecruit() : updateRecruit()">确认</el-button>
             </el-form-item>
 
         </el-form>
-    
+
     </el-drawer>
 
     <el-dialog v-model="detailVisible" title="详细描述" width="800">
-        <div 
-            class="rich-content" 
-            v-html="selectedDetail"
-            style="padding: 0 20px; line-height: 1.6"></div>
-        
+        <div class="rich-content" v-html="selectedDetail" style="padding: 0 20px; line-height: 1.6"></div>
+
         <template #footer>
             <span class="dialog-footer">
-            <el-button @click="detailVisible = false">关闭</el-button>
+                <el-button @click="detailVisible = false">关闭</el-button>
             </span>
         </template>
     </el-dialog>
@@ -656,4 +664,17 @@ const updateRecruit = async () => {
     }
 }
 
+/* 富文本内容样式 */
+.rich-content :deep(p) {
+  margin: 1em 0;
+}
+.rich-content :deep(ul) {
+  padding-left: 2em;
+}
+.rich-content :deep(pre) {
+  background: #f5f7fa;
+  padding: 1em;
+  border-radius: 4px;
+  overflow: auto;
+}
 </style>
