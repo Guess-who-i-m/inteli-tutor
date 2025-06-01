@@ -577,7 +577,7 @@ const updateRecruit = async () => {
             </div>
 
             <el-form-item>
-                <el-button type="primary" @click="title == '发布应聘' ? addRecruit() : updateRecruit(); clearData();">确认</el-button>
+                <el-button type="primary" @click="title == '发布招聘信息' ? addRecruit() : updateRecruit(); clearData();">确认</el-button>
             </el-form-item>
 
         </el-form>

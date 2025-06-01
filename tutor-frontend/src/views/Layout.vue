@@ -304,7 +304,7 @@ const deleteCategory = () => {
 
         &__logo {
             height: 120px;
-            background: url('@/assets/logo.png') no-repeat center / 120px auto;
+            background: url('@/assets/图片2.png') no-repeat center / 180px auto;
         }
 
         .el-menu {
