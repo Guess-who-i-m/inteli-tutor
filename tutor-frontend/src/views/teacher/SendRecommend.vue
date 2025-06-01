@@ -146,7 +146,7 @@ const recommendList = async () => {
             return {
                 recommendId: recommendData.recommendId,             // ID直接传递
                 subject: recommendData.subject,                     // 科目直接传递
-                online: recommendData.online ? '线上' : '线下',      // 布尔转中文
+                online: recommendData.online,      // 布尔转中文
                 price: String(recommendData.price),                 // 价格转字符串(显示需要)
                 time: timeString || '暂无时间安排',                  // 空数据兜底显示
                 detail: recommendData.detail,
@@ -283,7 +283,7 @@ const showDrawer = (row) => {
     //数据拷贝
     recommendModel.value.price = row.price;
     recommendModel.value.subject = row.subject;
-    recommendModel.value.online = row.online === '线上' ? true : false; // 根据显示文本判断
+    recommendModel.value.online = row.online; // 根据显示文本判断
     recommendModel.value.detail = row.detail;
     // **修改：根据原始时间数据填充时间相关字段**
     if (row.originalDates && row.originalDates.length > 0) {
@@ -431,7 +431,11 @@ const deleteRecommend = (row) => {
 
             <el-table-column label="辅导价格" prop="price"></el-table-column>
 
-            <el-table-column label="辅导形式" prop="online"> </el-table-column>
+            <el-table-column label="辅导形式">
+                <template #default="scope">
+                {{ scope.row.online ? '线上' : '线下' }}
+                </template>
+            </el-table-column>
 
             <el-table-column label="辅导时间" width="400" prop="time"></el-table-column>
 
