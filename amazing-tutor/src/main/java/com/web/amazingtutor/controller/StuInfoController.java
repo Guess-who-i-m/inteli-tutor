@@ -119,6 +119,18 @@ public class StuInfoController {
         return R.success(res);
     }
 
+    @GetMapping("getStuMsgById")
+    public R<StuInfo> getStuMsgById(@RequestParam Integer stuId){
+
+        // 查询对应tch_id的信息
+        QueryWrapper<StuInfo> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("stu_id", stuId);
+        StuInfo res = stuInfoService.getOne(queryWrapper);
+
+        // 将查询结果返回
+        return R.success(res);
+    }
+
     @PostMapping("/updateAvatar")
     public R<String> updateAvatar(@RequestBody String json) throws JsonProcessingException {
         Map<String, Object> map = ThreadLocalUtil.get();
