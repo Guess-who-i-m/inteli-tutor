@@ -6,17 +6,17 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.web.amazingtutor.common.R;
-import com.web.amazingtutor.pojo.Student;
-import com.web.amazingtutor.pojo.Teacher;
+import com.web.amazingtutor.pojo.*;
 import com.web.amazingtutor.service.*;
 import com.web.amazingtutor.utils.JwtUtil;
+import com.web.amazingtutor.utils.LLMUtil;
 import com.web.amazingtutor.utils.ThreadLocalUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 @CrossOrigin
 @Slf4j
@@ -33,6 +33,7 @@ public class StudentController {
     private final RecommendDateService recommendDateService;
     private final RecommendService recommendService;
     private final CommentService commentService;
+    private final ChatClient chatClient;
 
     @PostMapping("/register")
     public R<Student> register(@RequestBody String json) {
@@ -107,5 +108,85 @@ public class StudentController {
         else {
             return R.error("不存在的用户");
         }
+    }
+
+    @PostMapping("/llmRecommendStudent")
+    public R<List<Recruit>> llmRecommendStudent(@RequestBody String json) {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode jsonNode;
+
+        String description = null;
+
+        try {
+            jsonNode = mapper.readTree(json);
+            description = jsonNode.get("prompt").asText();
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+
+        String application = "现在你需要家教老师推荐学生招聘单。你将会得到三个依据，分别是：" +
+            "家教老师对自身情况的描述、数据库中存储的全部招聘信息、数据库中存储的全部学生信息。" +
+            "你需要依据这三者之间的内容，匹配出最适合家教老师的学生招聘单。";
+
+        String rules = "你需要以Json格式进行回复，要求格式形如{recruit:[1,2,3],reason：\"<推荐这些招聘单的原因>\"}，" +
+            "其中1，2和3都是招聘的编号(recruit_id)。不允许输出其它额外内容。" ;
+
+        List<StuInfo> stuInfos = stuInfoService.list();
+        List<Recruit> recruits = recruitService.list();
+
+        String stuInfoStr = stuInfos.toString();
+        String recruitStr = recruits.toString();
+
+        String userPrompt = application + "\n" + "家教老师对自身情况的描述:" + "\n"
+            + description + "\n" + "数据库中存储的全部招聘信息：" + "\n" + recruitStr + "\n"
+            + "数据库中存储的全部家长/学生信息：" + "\n" + stuInfoStr + "\n" + rules;
+
+        String response = chatClient
+            .prompt()
+            .user(userPrompt)
+            .call()
+            .content();
+
+        List<Integer> recruitIds = new ArrayList<>();
+        String reason;
+        try {
+            // Attempt to parse the LLM response as the expected JSON structure
+            // The LLM might sometimes add ```json ... ``` markdown, try to strip it.
+            String cleanedResponse = LLMUtil.cleanJsonString(response);
+            JsonNode responseNode = mapper.readTree(cleanedResponse);
+            JsonNode idsNode = responseNode.get("recruit"); // Match the key in 'rules'
+            reason = responseNode.get("reason").asText();
+            if (idsNode != null && idsNode.isArray()) {
+                for (JsonNode idNode : idsNode) {
+                    if (idNode.isInt()) {
+                        recruitIds.add(idNode.asInt());
+                    } else {
+                        System.err.println("LLM returned a non-integer ID in the list: " + idNode.asText());
+                        // Decide how to handle: skip, error out, or try to parse
+                    }
+                }
+            } else {
+                System.err.println("LLM response did not contain 'teacher_ids' array or was not in expected format. Response: " + cleanedResponse);
+                // You might want to try a more lenient parsing if the LLM is inconsistent
+                // For example, if it sometimes returns just an array of IDs without the "teacher_ids" key.
+                // Or if it uses a different key.
+                return R.error( "LLM response format error. Could not extract teacher IDs.");
+            }
+        } catch (JsonProcessingException e) {
+            System.err.println("Error parsing LLM JSON response: " + response + " - " + e.getMessage());
+            return R.error("LLM response was not valid JSON or did not match expected structure.");
+        }
+
+        if (recruitIds.isEmpty()) {
+            return R.successMsg("没有找到合适的招聘单子呢");
+        }
+
+        List<Recruit> recruits1 = recruitService.listByIds(recruitIds);
+        R<List<Recruit>> result = new R<>();
+        result.add("reason", reason);
+        result.setCode(1);
+        result.setData(recruits1);
+        result.setMsg("查询成功");
+        return result;
     }
 }

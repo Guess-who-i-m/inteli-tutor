@@ -11,6 +11,10 @@ spring:
     multipart:
       max-file-size: 100MB
       max-request-size: 100MB
+  ai:
+    openai:
+      base-url: https://dashscope.aliyuncs.com/compatible-mode
+      api-key: This_was_a_fake_api_key        # The real api key was got from .env file and ChatConfig.java
 
 mybatis-plus:
   mapper-locations: classpath:mapper/**/*.xml  # XML ??
