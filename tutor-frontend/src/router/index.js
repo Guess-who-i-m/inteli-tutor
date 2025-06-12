@@ -16,7 +16,8 @@ import SendRecommendVue from '@/views/teacher/SendRecommend.vue'
 import TeacherInfoVue from '@/views/teacher/TeacherInfo.vue'
 
 import LlmSearchTchVue from '@/views/llm/LlmSearchTchVue.vue'
-import LlmStuInstructor from '@/views/llm/LlmStuInstructor.vue'
+import LlmStuInstructorVue from '@/views/llm/LlmStuInstructor.vue'
+import LlmSearchStuVue from '@/views/llm/LlmSearchStu.vue'
 
 // 定义路由配置数组
 const routes = [
@@ -41,11 +42,12 @@ const routes = [
             { path: '/student/sendRecruit', component: SendRecruitVue},
             { path: '/student/studentInfo', component: StudentInfoVue},
             { path: '/student/llmSearchTch', component: LlmSearchTchVue},
-            { path: '/student/llmStuInstructor', component: LlmStuInstructor},
+            { path: '/student/llmStuInstructor', component: LlmStuInstructorVue},
 
             { path: '/teacher/recruitList', component: RecruitListVue},
             { path: '/teacher/sendRecommend', component: SendRecommendVue},
             { path: '/teacher/teacherInfo', component: TeacherInfoVue},
+            { path: '/teacher/llmSearchStu', component: LlmSearchStuVue},
             
             // 用户信息相关路由
             { path: '/user/avatar', component: UserAvatarVue },       // 用户头像

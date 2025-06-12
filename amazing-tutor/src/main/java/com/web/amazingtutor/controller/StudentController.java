@@ -17,6 +17,7 @@ import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 @CrossOrigin
 @Slf4j
@@ -25,13 +26,13 @@ import java.util.*;
 @RequiredArgsConstructor
 public class StudentController {
     private final TeacherService teacherService;
-    private final TchInfoService tchInfoService;
+    private final StuInfoService tchInfoService;
     private final StuInfoService stuInfoService;
     private final StudentService studentService;
     private final RecruitDateService recruitDateService;
     private final RecruitService recruitService;
-    private final RecommendDateService recommendDateService;
-    private final RecommendService recommendService;
+    private final RecruitDateService recommendDateService;
+    private final RecruitService recommendService;
     private final CommentService commentService;
     private final ChatClient chatClient;
 
@@ -124,22 +125,37 @@ public class StudentController {
             throw new RuntimeException(e);
         }
 
-        String application = "现在你需要家教老师推荐学生招聘单。你将会得到三个依据，分别是：" +
+        String application = "现在你需要为家教老师推荐学生招聘单。你将会得到三个依据，分别是：" +
             "家教老师对自身情况的描述、数据库中存储的全部招聘信息、数据库中存储的全部学生信息。" +
-            "你需要依据这三者之间的内容，匹配出最适合家教老师的学生招聘单。";
+            "你需要依据这三者之间的内容，匹配出最适合家教老师的学生招聘单。" +
+            "注意：你需要额外注意招聘信息和家长/学生信息中，stu_id的一致性匹配";
 
         String rules = "你需要以Json格式进行回复，要求格式形如{recruit:[1,2,3],reason：\"<推荐这些招聘单的原因>\"}，" +
             "其中1，2和3都是招聘的编号(recruit_id)。不允许输出其它额外内容。" ;
 
-        List<StuInfo> stuInfos = stuInfoService.list();
-        List<Recruit> recruits = recruitService.list();
+        List<StuInfo> teachers = tchInfoService.list();
+        List<Recruit> recommends = recommendService.list();
+        // 创建按tch_id分组的推荐信息Map
+        Map<Integer, List<Recruit>> recommendMap = recommends.stream()
+            .collect(Collectors.groupingBy(Recruit::getStuId));
+        // 构建连接后的信息字符串
+        StringBuilder combinedInfo = new StringBuilder();
+        for (StuInfo teacher : teachers) {
+            Integer tchId = teacher.getStuId();
+            List<Recruit> teacherRecruits = recommendMap.getOrDefault(tchId, Collections.emptyList());
 
-        String stuInfoStr = stuInfos.toString();
-        String recruitStr = recruits.toString();
+            combinedInfo.append("学生ID: ").append(tchId).append("\n");
+            combinedInfo.append("学生信息: ").append(teacher.toString()).append("\n");
+            combinedInfo.append("关联招聘信息: ").append(teacherRecruits.toString()).append("\n\n");
+        }
+        String userPrompt = application + "\n"
+            + "学生和家长对自身情况的描述:" + "\n"
+            + description + "\n"
+            + "数据库中的教师信息及关联推荐（按tch_id连接）:" + "\n"  // 修改标题
+            + combinedInfo.toString()  // 使用连接后的数据
+            + rules;
 
-        String userPrompt = application + "\n" + "家教老师对自身情况的描述:" + "\n"
-            + description + "\n" + "数据库中存储的全部招聘信息：" + "\n" + recruitStr + "\n"
-            + "数据库中存储的全部家长/学生信息：" + "\n" + stuInfoStr + "\n" + rules;
+        log.info(userPrompt);
 
         String response = chatClient
             .prompt()

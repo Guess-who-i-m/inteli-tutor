@@ -230,6 +230,13 @@ const deleteCategory = () => {
                         <span>应聘信息发布</span>
                     </el-menu-item>
 
+                    <el-menu-item index="/teacher/llmSearchStu">
+                        <el-icon>
+                            <Comment />
+                        </el-icon>
+                        <span>AI智能匹配家教</span>
+                    </el-menu-item>
+
                     <!-- 个人中心 -->
                     <el-sub-menu >
 

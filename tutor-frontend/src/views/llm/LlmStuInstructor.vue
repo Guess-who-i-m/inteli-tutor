@@ -161,12 +161,18 @@ const sendMessage = async () => {
     role: 'user',
     content: prompt,
   });
+  // ******** 新增：准备要发送到后端的会话历史 ********
+  // 我们发送包含最新用户消息在内的所有历史记录
+  // 使用 map 来创建一个不包含 'id' 的新数组，因为后端不需要它
+  const conversationHistory = messages.value.map(({ role, content }) => ({
+    role,
+    content,
+  }));
   // 清空输入框
   inputMessage.value = '';
-  // 立即滚动到底部，以便看到加载中的AI消息
-  // await nextTick(); // 如果使用Vue，建议这样做
+  // 立即滚动到底部
   scrollToBottom();
-  // 2. 创建一个空的AI消息占位符，我们将把流式数据填充到这里
+  // 2. 创建一个空的AI消息占位符
   const aiMessageId = Date.now() + '-ai';
   messages.value.push({
     id: aiMessageId,
@@ -175,24 +181,23 @@ const sendMessage = async () => {
   });
   
   isLoading.value = true;
-
-  
-
   try {
     // 3. 使用 Fetch API 发起请求
     const response = await fetch('/api/llm/stream', { // 确保URL正确
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json', // 对应方案A（推荐）
-        'Authorization': tokenStore.token
+        'Content-Type': 'application/json',
+        'Authorization': tokenStore.token // 假设 tokenStore 已定义
       },
-      body: JSON.stringify({ prompt: prompt }), // 对应方案A（推荐）
+      // ******** 修改：发送整个会话历史 ********
+      // 之前: body: JSON.stringify({ prompt: prompt }),
+      // 现在:
+      body: JSON.stringify(conversationHistory), // 直接发送消息数组
     });
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-
-    // 4. 处理数据流
+    // 4. 处理数据流 (这部分代码无需改动)
     const reader = response.body.getReader();
     const decoder = new TextDecoder('utf-8');
     let streaming = true;
@@ -202,29 +207,21 @@ const sendMessage = async () => {
         streaming = false;
         break;
       }
-      // 将接收到的数据块 (Uint8Array) 解码为字符串
       const chunk = decoder.decode(value, { stream: true });
-      // 5. 实时更新UI
-      // 找到我们之前创建的AI消息占位符
       const aiMessage = messages.value.find(m => m.id === aiMessageId);
       if (aiMessage) {
-        // 将新的数据块追加到内容后面
         aiMessage.content += chunk;
-        
-        // 每次更新都滚动到底部，实现打字机效果
-        // await nextTick(); // 如果使用Vue
         scrollToBottom();
       }
     }
   } catch (error) {
     console.error('流式请求失败:', error);
-    // 在UI上显示错误信息
     const aiMessage = messages.value.find(m => m.id === aiMessageId);
     if (aiMessage) {
       aiMessage.content = '抱歉，出错了，请稍后再试。';
     }
   } finally {
-    // 6. 请求结束，无论成功或失败，都设置loading为false
+    // 6. 请求结束
     isLoading.value = false;
   }
 };
