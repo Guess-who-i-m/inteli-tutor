@@ -15,6 +15,9 @@ import RecruitListVue from '@/views/teacher/RecruitList.vue'
 import SendRecommendVue from '@/views/teacher/SendRecommend.vue'
 import TeacherInfoVue from '@/views/teacher/TeacherInfo.vue'
 
+import LlmSearchTchVue from '@/views/llm/LlmSearchTchVue.vue'
+import LlmStuInstructor from '@/views/llm/LlmStuInstructor.vue'
+
 // 定义路由配置数组
 const routes = [
 
@@ -37,6 +40,8 @@ const routes = [
             { path: '/student/recommendList', component: RecommendListVue},
             { path: '/student/sendRecruit', component: SendRecruitVue},
             { path: '/student/studentInfo', component: StudentInfoVue},
+            { path: '/student/llmSearchTch', component: LlmSearchTchVue},
+            { path: '/student/llmStuInstructor', component: LlmStuInstructor},
 
             { path: '/teacher/recruitList', component: RecruitListVue},
             { path: '/teacher/sendRecommend', component: SendRecommendVue},

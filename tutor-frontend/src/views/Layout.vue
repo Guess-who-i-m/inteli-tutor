@@ -7,7 +7,9 @@ import {
     Crop,
     EditPen,
     SwitchButton,
-    CaretBottom
+    CaretBottom,
+    Comment,
+    Stamp
 } from '@element-plus/icons-vue'
 
 import avatar from '@/assets/default.png'
@@ -144,6 +146,7 @@ const deleteCategory = () => {
             <el-menu active-text-color="#ffd04b" background-color="#232323"  text-color="#fff" router>
                 <!-- 只有家长/学生才能看到的界面 -->
                 <template v-if="isStudent">
+
                     <!-- 家教应聘信息列表 -->
                     <el-menu-item index="/student/recommendList">
                         <el-icon>
@@ -151,6 +154,7 @@ const deleteCategory = () => {
                         </el-icon>
                         <span>家教应聘信息</span>
                     </el-menu-item>
+
                     <!-- 家教招聘信息发布 -->
                     <el-menu-item index="/student/sendRecruit">
                         <el-icon>
@@ -158,6 +162,21 @@ const deleteCategory = () => {
                         </el-icon>
                         <span>招聘信息发布</span>
                     </el-menu-item>
+
+                    <el-menu-item index="/student/llmSearchTch">
+                        <el-icon>
+                            <Comment />
+                        </el-icon>
+                        <span>AI智能匹配家教</span>
+                    </el-menu-item>
+
+                    <el-menu-item index="/student/llmStuInstructor">
+                        <el-icon>
+                            <Stamp />
+                        </el-icon>
+                        <span>AI学情规划</span>
+                    </el-menu-item>
+
                     <!-- 个人中心 -->
                     <el-sub-menu >
 

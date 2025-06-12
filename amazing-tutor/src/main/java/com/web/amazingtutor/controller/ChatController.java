@@ -4,10 +4,7 @@ import com.web.amazingtutor.common.R;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
 @CrossOrigin
@@ -31,7 +28,7 @@ public class ChatController {
     }
 
     @PostMapping("/stream")
-    public Flux<String> stream(String prompt) {
+    public Flux<String> stream(@RequestBody String prompt) {
 
         Flux<String> response = chatClient
             .prompt()
