@@ -48,7 +48,7 @@
 
 ![alt text](/assets/PixPin_2025-06-19_20-31-27.gif)
 
-![alt text](/assets/PixPin_2025-06-19_20-29-27.gif)
+![alt text](/assets/PixPin_2025-06-19_20-39-10.gif)
 
 
 
