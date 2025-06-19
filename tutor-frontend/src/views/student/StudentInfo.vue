@@ -27,13 +27,38 @@ import useUserInfoStore from '@/stores/userInfo'
 
 const userInfoStore = useUserInfoStore()
 
+// 新增：年级选项映射表（值->标签）
+const gradeOptions = [
+    { value: 1, label: '小学一年级' },
+    { value: 2, label: '小学二年级' },
+    { value: 3, label: '小学三年级' },
+    { value: 4, label: '小学四年级' },
+    { value: 5, label: '小学五年级' },
+    { value: 6, label: '小学六年级' },
+    { value: 7, label: '初中一年级' },
+    { value: 8, label: '初中二年级' },
+    { value: 9, label: '初中三年级' },
+    { value: 10, label: '高中一年级' },
+    { value: 11, label: '高中二年级' },
+    { value: 12, label: '高中三年级' }
+]
+
+// 新增：将数字年级转换为汉字标签的方法
+const gradeLabel = ref('')
+const getGradeLabel = (gradeValue) => {
+    const option = gradeOptions.find(opt => opt.value === gradeValue)
+    return option ? option.label : '未知年级'
+}
+
 const getUserInfo = () => {
+    console.log("转换前的存储",userInfoStore.info)
     userInfo.value = userInfoStore.info
+    console.log("转换前的userInfo", userInfo)
+    userInfo.value.grade = getGradeLabel(userInfo.value.grade)
 }
 
 getUserInfo()
 
-import { userInfoUpdateService } from '@/api/user'
 import { ElMessage } from 'element-plus'
 import { studentInfoUpdateService } from '@/api/student'
 
@@ -44,8 +69,13 @@ const modifyUserInfo = async () => {
 
     ElMessage.success(result.message ? result.message : "修改成功")
 
+    console.log("修改过后的userInfo", userInfo)
+
     // 修改pinia中的信息
     userInfoStore.setInfo(userInfo.value)
+
+    console.log("修改过后的存储", userInfoStore.info)
+    
 }
 
 </script>
@@ -62,9 +92,9 @@ const modifyUserInfo = async () => {
             <el-col :span="12">
                 <el-form :model="userInfo" :rules="rules" label-width="100px" size="large">
 
-                    <el-form-item label="登录名称">
+                    <!-- <el-form-item label="登录名称">
                         <el-input v-model="userInfo.username" disabled></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
 
                     <!-- <el-form-item label="学生性别" prop="gender">
                         <el-input v-model="userInfo.gender"></el-input>
@@ -83,18 +113,18 @@ const modifyUserInfo = async () => {
 
                     <el-form-item label="学生年级">
                         <el-select v-model="userInfo.grade" placeholder="请选择您孩子的年级">
-                            <el-option label="小学一年级" value="1" />
-                            <el-option label="小学二年级" value="2" />
-                            <el-option label="小学三年级" value="3" />
-                            <el-option label="小学四年级" value="4" />
-                            <el-option label="小学五年级" value="5" />
-                            <el-option label="小学六年级" value="6" />
-                            <el-option label="初中一年级" value="7" />
-                            <el-option label="初中二年级" value="8" />
-                            <el-option label="初中三年级" value="9" />
-                            <el-option label="高中一年级" value="10" />
-                            <el-option label="高中二年级" value="11" />
-                            <el-option label="高中三年级" value="12" />
+                            <el-option label="小学一年级" :value="1" />
+                            <el-option label="小学二年级" :value="2" />
+                            <el-option label="小学三年级" :value="3" />
+                            <el-option label="小学四年级" :value="4" />
+                            <el-option label="小学五年级" :value="5" />
+                            <el-option label="小学六年级" :value="6" />
+                            <el-option label="初中一年级" :value="7" />
+                            <el-option label="初中二年级" :value="8" />
+                            <el-option label="初中三年级" :value="9" />
+                            <el-option label="高中一年级" :value="10" />
+                            <el-option label="高中二年级" :value="11" />
+                            <el-option label="高中三年级" :value="12" />
                         </el-select>
                     </el-form-item>
 

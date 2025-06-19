@@ -9,7 +9,7 @@ export const recruitListService = (params) =>{
     return request.get('/recruit/getMyRecruits', {params:params})
 }
 
-export const reqruitListAllService = (params) => {
+export const recruitListAllService = (params) => {
     return request.get('/recruit/getAllRecruits', {params:params})
 }
 

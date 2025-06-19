@@ -57,6 +57,8 @@ const callLLMRecommend = async () => {
         if (result.code === 1) {
             // 处理返回的原因
             llmReason.value = result.map?.reason || '已为您找到最匹配的岗位！';
+
+            console.log(result.data)
             
             // 定义映射表
             const schMap = { jbw: '985', eyy: '211', syl: '双一流', yb: '一本', eb: '二本' };

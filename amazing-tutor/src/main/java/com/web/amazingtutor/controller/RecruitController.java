@@ -245,7 +245,7 @@ public class RecruitController {
     }
 
     @GetMapping("getMyRecruits")
-    public R<PageBean<RecruitItem>> getMyRecruits(Integer pageNum, Integer pageSize) {
+    public R<PageBean<RecruitItem>> getMyRecruits(Integer pageNum, Integer pageSize, String subject, String online) {
         Map<String, Object> map = ThreadLocalUtil.get();
         Object userId = map.get("id"); // 建议检查 userId 是否为 null 或类型是否正确
 
@@ -254,6 +254,20 @@ public class RecruitController {
 
         QueryWrapper<Recruit> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("stu_id", userId);
+        if (subject != null) {
+            queryWrapper.eq("subject", subject);
+        }
+        if (online != null) {
+            Boolean bool = null;
+            if (online.equals("true")) {
+                bool = true;
+            } else if (online.equals("false")) {
+                bool = false;
+            } else {
+                return R.error("错误的线上线下格式");
+            }
+            queryWrapper.eq("online", bool);
+        }
         List<Recruit> pagedRecruits = recruitService.list(queryWrapper);  // pagedRecruits 现在是 Page<Recruit> 类型
 
         List<RecruitItem> recruitItemsResultList = new ArrayList<>();
@@ -305,12 +319,34 @@ public class RecruitController {
     }
 
     @GetMapping("/getAllRecruits")
-    public R<PageBean<RecruitItem>> getAllRecruits(Integer pageNum, Integer pageSize) {
+    public R<PageBean<RecruitItem>> getAllRecruits(Integer pageNum, Integer pageSize, String subject, String online) {
 
         // 1. 分页查询主表 Recommend
         PageHelper.startPage(pageNum, pageSize);
 
-        List<Recruit> pagedRecruits = recruitService.list();  // pagedRecruits 现在是 Page<Recruit> 类型
+        List<Recruit> pagedRecruits = null;
+
+        if (subject == null && online == null) {
+            pagedRecruits = recruitService.list();  // pagedRecruits 现在是 Page<Recruit> 类型
+        } else {
+            QueryWrapper<Recruit> queryWrapper = new QueryWrapper<>();
+            if (subject != null) {
+                queryWrapper.eq("subject", subject);
+            }
+            if (online != null) {
+                Boolean bool = null;
+                if (online.equals("true")) {
+                    bool = true;
+                } else if (online.equals("false")) {
+                    bool = false;
+                } else {
+                    return R.error("错误的线上线下格式");
+                }
+                queryWrapper.eq("online", bool);
+            }
+            pagedRecruits = recruitService.list(queryWrapper);  // pagedRecruits 现在是 Page<Recruit> 类型
+        }
+
 
         List<RecruitItem> recruitItemsResultList = new ArrayList<>();
         long totalRecords = 0;

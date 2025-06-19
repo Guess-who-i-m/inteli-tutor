@@ -51,7 +51,9 @@ const callLLMRecommend = async () => {
         
         if (result.code === 1) {
             // 处理返回的原因
-            llmReason.value = result.map?.reason;
+            llmReason.value = result.map?.reason || '已为您找到最匹配的老师！';
+
+            console.log(result.data)
             
             // 处理返回的推荐数据
             recommends.value = result.data.map(item => {
@@ -66,6 +68,9 @@ const callLLMRecommend = async () => {
                     originalDates: [] // LLM返回的数据可能没有时间安排
                 };
             });
+            if (recommends.value.length === 0) {
+                 ElMessage.info('没有找到完全匹配的老师，请尝试优化您的描述');
+            }
         } else {
             ElMessage.error(result.msg || '智能推荐失败');
         }

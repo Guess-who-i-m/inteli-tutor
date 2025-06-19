@@ -163,6 +163,8 @@ public class StudentController {
             .call()
             .content();
 
+        System.out.println(response);
+
         List<Integer> recruitIds = new ArrayList<>();
         String reason;
         try {
@@ -172,6 +174,7 @@ public class StudentController {
             JsonNode responseNode = mapper.readTree(cleanedResponse);
             JsonNode idsNode = responseNode.get("recruit"); // Match the key in 'rules'
             reason = responseNode.get("reason").asText();
+
             if (idsNode != null && idsNode.isArray()) {
                 for (JsonNode idNode : idsNode) {
                     if (idNode.isInt()) {
@@ -194,7 +197,8 @@ public class StudentController {
         }
 
         if (recruitIds.isEmpty()) {
-            return R.successMsg("没有找到合适的招聘单子呢");
+
+            return R.success(Collections.emptyList());
         }
 
         List<Recruit> recruits1 = recruitService.listByIds(recruitIds);
@@ -203,6 +207,9 @@ public class StudentController {
         result.setCode(1);
         result.setData(recruits1);
         result.setMsg("查询成功");
+
+        log.info("推荐结果{}", result);
+
         return result;
     }
 }

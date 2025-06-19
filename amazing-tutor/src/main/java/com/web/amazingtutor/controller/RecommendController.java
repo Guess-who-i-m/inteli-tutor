@@ -222,7 +222,7 @@ public class RecommendController {
     }
 
     @GetMapping("getMyRecommends")
-    public R<PageBean<RecommendItem>> getMyRecommends(Integer pageNum, Integer pageSize) {
+    public R<PageBean<RecommendItem>> getMyRecommends(Integer pageNum, Integer pageSize, String subject, String online) {
         Map<String, Object> map = ThreadLocalUtil.get();
         Object userId = map.get("id"); // 建议检查 userId 是否为 null 或类型是否正确
 
@@ -230,6 +230,20 @@ public class RecommendController {
         PageHelper.startPage(pageNum, pageSize);
         QueryWrapper<Recommend> recommendQueryWrapper = new QueryWrapper<>();
         recommendQueryWrapper.eq("tch_id", userId);
+        if (subject != null) {
+            recommendQueryWrapper.eq("subject", subject);
+        }
+        if (online != null) {
+            Boolean bool = null;
+            if (online.equals("true")) {
+                bool = true;
+            } else if (online.equals("false")) {
+                bool = false;
+            } else {
+                return R.error("错误的线上线下格式");
+            }
+            recommendQueryWrapper.eq("online", bool);
+        }
         List<Recommend> pagedRecommends = recommendService.list(recommendQueryWrapper); // pagedRecommends 现在是 Page<Recommend> 类型
 
         List<RecommendItem> recommendItemsResultList = new ArrayList<>();
@@ -282,13 +296,33 @@ public class RecommendController {
 
 
     @GetMapping("/getAllRecommends")
-    public R<PageBean<RecommendItem>> getAllRecommends(Integer pageNum, Integer pageSize) {
+    public R<PageBean<RecommendItem>> getAllRecommends(Integer pageNum, Integer pageSize, String subject, String online) {
 
+        List<Recommend> pagedRecommends = null;
 
         // 1. 分页查询主表 Recommend
         PageHelper.startPage(pageNum, pageSize);
 
-        List<Recommend> pagedRecommends = recommendService.list();  // pagedRecommends 现在是 Page<Recommend> 类型
+        if (subject == null && online == null) {
+            pagedRecommends = recommendService.list();  // pagedRecommends 现在是 Page<Recruit> 类型
+        } else {
+            QueryWrapper<Recommend> queryWrapper = new QueryWrapper<>();
+            if (subject != null) {
+                queryWrapper.eq("subject", subject);
+            }
+            if (online != null) {
+                Boolean bool = null;
+                if (online.equals("true")) {
+                    bool = true;
+                } else if (online.equals("false")) {
+                    bool = false;
+                } else {
+                    return R.error("错误的线上线下格式");
+                }
+                queryWrapper.eq("online", bool);
+            }
+            pagedRecommends = recommendService.list(queryWrapper);  // pagedRecommends 现在是 Page<Recruit> 类型
+        }
 
         List<RecommendItem> recommendItemsResultList = new ArrayList<>();
         long totalRecords = 0;

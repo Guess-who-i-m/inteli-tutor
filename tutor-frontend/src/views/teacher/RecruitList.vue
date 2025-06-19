@@ -57,7 +57,7 @@ const onCurrentChange = (num) => {
     recruitList();
 }
 
-import { reqruitListAllService } from '@/api/recruit'
+import { recruitListAllService } from '@/api/recruit'
 
 // 异步获取招聘列表数据并处理
 const recruitList = async () => {
@@ -66,12 +66,15 @@ const recruitList = async () => {
         pageNum: pageNum.value,    // 当前页码
         pageSize: pageSize.value,  // 每页显示条数
         // 可选的科目过滤条件（示例中被注释）
-        // subject: subject.value ? subject.value : null,
+        subject: subject.value ? subject.value : null,
         // 可选的线上/线下过滤条件（示例中被注释） 
-        // online: online.value ? online.value : null,
+        online: online.value ? online.value : null,
     }
+
+    console.log('招聘列表数据', params);
+
     // 调用招聘列表服务获取数据
-    let result = await reqruitListAllService(params);
+    let result = await recruitListAllService(params);
     // 数据处理流程
     if (result.data && result.data.items) {
         // 更新总数据条数（用于分页显示）

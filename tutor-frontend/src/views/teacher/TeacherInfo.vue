@@ -66,9 +66,9 @@ const modifyUserInfo = async () => {
             <el-col :span="12">
                 <el-form :model="userInfo" :rules="rules" label-width="100px" size="large">
 
-                    <el-form-item label="登录名称">
+                    <!-- <el-form-item label="登录名称">
                         <el-input v-model="userInfo.username" disabled></el-input>
-                    </el-form-item>
+                    </el-form-item> -->
 
                     <!-- <el-form-item label="教师性别" prop="gender">
                         <el-input v-model="userInfo.gender"></el-input>

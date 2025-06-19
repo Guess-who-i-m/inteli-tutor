@@ -92,9 +92,9 @@ const recommendList = async () => {
         pageNum: pageNum.value,    // 当前页码
         pageSize: pageSize.value,  // 每页显示条数
         // 可选的科目过滤条件（示例中被注释）
-        // subject: subject.value ? subject.value : null,
+        subject: subject.value ? subject.value : null,
         // 可选的线上/线下过滤条件（示例中被注释） 
-        // online: online.value ? online.value : null,
+        online: online.value ? online.value : null,
     }
     // 调用推荐列表服务获取数据
     let result = await recommendListAllService(params);

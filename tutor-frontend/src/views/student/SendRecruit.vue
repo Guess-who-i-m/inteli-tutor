@@ -70,9 +70,9 @@ const recruitList = async () => {
         pageNum: pageNum.value,    // 当前页码
         pageSize: pageSize.value,  // 每页显示条数
         // 可选的科目过滤条件（示例中被注释）
-        // subject: subject.value ? subject.value : null,
+        subject: subject.value ? subject.value : null,
         // 可选的线上/线下过滤条件（示例中被注释） 
-        // online: online.value ? online.value : null,
+        online: online.value ? online.value : null,
     }
     // 调用招聘列表服务获取数据
     let result = await recruitListService(params);
@@ -443,7 +443,7 @@ const deleteRecruit = (row) => {
                 </el-select>
             </el-form-item>
             <el-form-item>
-                <el-button type="primary" @click="recruitList">搜索</el-button>
+                <el-button type="primary" @click="recruitList()">搜索</el-button>
                 <el-button @click="subject = ''; online = ''; recruitList()">重置</el-button>
             </el-form-item>
         </el-form>
