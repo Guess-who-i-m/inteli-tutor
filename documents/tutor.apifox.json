@@ -1,0 +1,3797 @@
+{
+  "apifoxProject": "1.0.0",
+  "$schema": {
+    "app": "apifox",
+    "type": "project",
+    "version": "1.2.0"
+  },
+  "info": {
+    "name": "tutor",
+    "description": "",
+    "mockRule": {
+      "rules": [],
+      "enableSystemRule": true
+    }
+  },
+  "apiCollection": [
+    {
+      "name": "根目录",
+      "id": 57370350,
+      "auth": {},
+      "securityScheme": {},
+      "parentId": 0,
+      "serverId": "",
+      "description": "",
+      "identityPattern": {
+        "httpApi": {
+          "type": "methodAndPath",
+          "bodyType": "",
+          "fields": []
+        }
+      },
+      "shareSettings": {},
+      "visibility": "SHARED",
+      "moduleId": 4459044,
+      "preProcessors": [
+        {
+          "id": "inheritProcessors",
+          "type": "inheritProcessors",
+          "data": {}
+        }
+      ],
+      "postProcessors": [
+        {
+          "id": "inheritProcessors",
+          "type": "inheritProcessors",
+          "data": {}
+        }
+      ],
+      "inheritPostProcessors": {},
+      "inheritPreProcessors": {},
+      "items": [
+        {
+          "name": "学生/家长",
+          "id": 57372797,
+          "auth": {},
+          "securityScheme": {},
+          "parentId": 0,
+          "serverId": "",
+          "description": "",
+          "identityPattern": {
+            "httpApi": {
+              "type": "inherit",
+              "bodyType": "",
+              "fields": []
+            }
+          },
+          "shareSettings": {},
+          "visibility": "INHERITED",
+          "moduleId": 4459044,
+          "preProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "postProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "inheritPostProcessors": {},
+          "inheritPreProcessors": {},
+          "items": [
+            {
+              "name": "学生/家长注册接口",
+              "api": {
+                "id": "299595174",
+                "method": "post",
+                "path": "/api/student/register",
+                "parameters": {},
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681897395",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVVV0B1QTSCGHNAGP0ENN5TR"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVVV0B1QTSCGHNAGP0ENN5TR": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"注册成功\",\"data\":null,\"map\":{}}",
+                    "responseId": 681897395,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  },
+                  {
+                    "name": "异常示例",
+                    "data": "{\"code\":0,\"msg\":\"该用户名已被注册\",\"data\":null,\"map\":{}}",
+                    "responseId": 681897395,
+                    "ordering": 2,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "username": {
+                        "type": "string",
+                        "title": "用户名"
+                      },
+                      "password": {
+                        "type": "string",
+                        "title": "密码"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "username",
+                      "password"
+                    ],
+                    "required": [
+                      "username",
+                      "password"
+                    ]
+                  },
+                  "mediaType": "",
+                  "examples": [
+                    {
+                      "value": "{\r\n    \"username\": \"test\",\r\n    \"password\": \"123456\"\r\n}",
+                      "mediaType": "application/json",
+                      "description": ""
+                    }
+                  ],
+                  "oasExtensions": ""
+                },
+                "description": "输入username和password完成学生/家长端的用户注册",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 10,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681897395"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "学生/家长登录接口",
+              "api": {
+                "id": "299596097",
+                "method": "post",
+                "path": "/api/student/login",
+                "parameters": {},
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681900151",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVVVJ1QHQVQ2TC8KHC5SWQ74"
+                      ],
+                      "x-apifox-refs": {
+                        "01JVVVJ1QHQVQ2TC8KHC5SWQ74": {
+                          "$ref": "#/definitions/170390029",
+                          "x-apifox-overrides": {
+                            "map": {
+                              "type": [
+                                "object",
+                                "null"
+                              ],
+                              "properties": {},
+                              "x-apifox-orders": [],
+                              "title": "动态数据",
+                              "description": "一些额外的数据可能会从这个字段返回"
+                            },
+                            "data": {
+                              "type": [
+                                "string",
+                                "integer",
+                                "boolean",
+                                "array",
+                                "object",
+                                "number",
+                                "null"
+                              ],
+                              "title": "数据",
+                              "description": "返回token"
+                            }
+                          },
+                          "required": [
+                            "data",
+                            "map"
+                          ]
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":null,\"data\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJzdHVJZCI6MSwidXNlcm5hbWUiOiJ0ZXN0In0sImV4cCI6MTc0Nzk1NjEyOX0.N-g3datplpzGP7sXo_ocwh8vkud1Dw1qWVPoCcUPYTU\",\"map\":{}}",
+                    "responseId": 681900151,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  },
+                  {
+                    "name": "异常示例",
+                    "data": "{\"code\":0,\"msg\":\"密码错误，请重新尝试\",\"data\":null,\"map\":{}}",
+                    "responseId": 681900151,
+                    "ordering": 2,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "username": {
+                        "type": "string",
+                        "title": "用户名"
+                      },
+                      "password": {
+                        "type": "string",
+                        "title": "密码"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "username",
+                      "password"
+                    ],
+                    "required": [
+                      "username",
+                      "password"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "学生/家长通过输入账号、密码，进行登录验证，后端返回token",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 20,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681900151"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "发布招聘信息接口",
+              "api": {
+                "id": "299605347",
+                "method": "post",
+                "path": "/api/recruit/publishRecruit",
+                "parameters": {
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "LYT1DuKJ2Q",
+                      "example": "",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681902002",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVWA1P5J1E7NGNKPDP7VRGZE"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVWA1P5J1E7NGNKPDP7VRGZE": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"成功发布招聘信息\",\"data\":null,\"map\":{}}",
+                    "responseId": 681902002,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "price": {
+                        "type": "integer",
+                        "title": "定价",
+                        "description": "家教的设定加个，多少元/小时"
+                      },
+                      "subject": {
+                        "type": "string",
+                        "title": "科目",
+                        "description": "想要补课的科目"
+                      },
+                      "online": {
+                        "type": "boolean",
+                        "title": "线上",
+                        "description": "线上或者线下的形式，线上是true，线下是false"
+                      },
+                      "detail": {
+                        "type": "string",
+                        "title": "描述细节",
+                        "description": "300字以内的描述细节"
+                      },
+                      "days": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "星期几",
+                        "description": "记录星期几"
+                      },
+                      "time_num": {
+                        "type": "string",
+                        "title": "招聘信息中设置的时间数量",
+                        "description": "有几个时间这个字段就设置成多少"
+                      },
+                      "start_times": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "开始时间",
+                        "description": "记录时间"
+                      },
+                      "end_times": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "结束时间"
+                      },
+                      "schLevel": {
+                        "type": "string",
+                        "title": "学校层次",
+                        "description": "想要找到家教的层次，可以为jbw、eyy、syl、yb、eb，分别对应酒吧舞、二幺幺、双一流、一本、二本"
+                      },
+                      "stuLevel": {
+                        "type": "string",
+                        "title": "学生水平",
+                        "description": "ABCDE，五档水平"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "price",
+                      "schLevel",
+                      "stuLevel",
+                      "subject",
+                      "online",
+                      "detail",
+                      "time_num",
+                      "days",
+                      "start_times",
+                      "end_times"
+                    ],
+                    "required": [
+                      "price",
+                      "schLevel",
+                      "stuLevel",
+                      "subject",
+                      "online",
+                      "detail",
+                      "time_num",
+                      "start_times",
+                      "days",
+                      "end_times"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "上传预期定价、学校层次、针对学生水平、科目、线上/线下形式、详细描述的信息，帮助学生/家长找到具体的家教",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 30,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681902002"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "获取家教老师信息列表接口",
+              "api": {
+                "id": "299605456",
+                "method": "get",
+                "path": "/api/recommend/getAllRecommends",
+                "parameters": {
+                  "query": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "bWf18CxxjX",
+                      "enable": true,
+                      "name": "pageNum",
+                      "schema": {
+                        "type": "integer"
+                      }
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "Tv5Wt83Bei",
+                      "enable": true,
+                      "name": "pageSize",
+                      "schema": {
+                        "type": "integer"
+                      }
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "gvEMnUusyp",
+                      "enable": true,
+                      "name": "subject"
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "vlS1LcRlWI",
+                      "enable": true,
+                      "name": "online"
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "OICpGCJPwZ",
+                      "example": "",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681918532",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":null,\"data\":[{\"recommend\":{\"recommendId\":3,\"price\":200,\"subject\":\"英语\",\"online\":false,\"detail\":\"sit sunt Ut ea Excepteur\",\"tchId\":1},\"recommendDates\":[{\"dateId\":2,\"day\":\"mon\",\"startTime\":\"11:42:58\",\"endTime\":\"22:00:15\",\"recommendId\":3},{\"dateId\":3,\"day\":\"tue\",\"startTime\":\"13:55:36\",\"endTime\":\"21:00:00\",\"recommendId\":3},{\"dateId\":4,\"day\":\"fri\",\"startTime\":\"14:00:00\",\"endTime\":\"23:00:00\",\"recommendId\":3}]}],\"map\":{}}",
+                    "responseId": 681918532,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "获取全部家教老师的应聘信息",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 40,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681918532"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "获取自己发布的招聘信息列表",
+              "api": {
+                "id": "299606166",
+                "method": "get",
+                "path": "/api/recruit/getMyRecruits",
+                "parameters": {
+                  "query": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "5bvlV0mBFX",
+                      "enable": true,
+                      "name": "pageNum",
+                      "schema": {
+                        "type": "integer"
+                      }
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "KDgTIbLP2Y",
+                      "enable": true,
+                      "name": "pageSize",
+                      "schema": {
+                        "type": "integer"
+                      }
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "T4Z3e1mtaB",
+                      "enable": true,
+                      "name": "subject"
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "mEJzEgmY9N",
+                      "enable": true,
+                      "name": "online"
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "kpurxAPLk6",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJpZCI6MSwidHlwZSI6InN0dWRlbnQiLCJ1c2VybmFtZSI6InRlc3QifSwiZXhwIjoxNzQ4MDA5NTM5fQ.q-jtY0B2PnBk7-5ZUwiOWnQ8F-rzwI56j25fyTG4p0g",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681902868",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVXH258M9HDH6CDHRGTH8ETH"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVXH258M9HDH6CDHRGTH8ETH": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":null,\"data\":[{\"recruit\":{\"recruitId\":1,\"price\":196,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"物理\",\"online\":false,\"detail\":\"adipisicing officia fugiat sit\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":3,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":4,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":5,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":6,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":7,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":8,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":9,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":11,\"price\":242,\"schLevel\":\"eyy\",\"stuLevel\":\"C\",\"subject\":\"计算机\",\"online\":false,\"detail\":\"et\",\"stuId\":1},\"recruitDates\":[{\"dateId\":5,\"day\":\"mon\",\"startTime\":\"18:00:00\",\"endTime\":\"20:00:00\",\"recruitId\":11},{\"dateId\":6,\"day\":\"mon\",\"startTime\":\"15:00:00\",\"endTime\":\"17:00:00\",\"recruitId\":11}]}],\"map\":{}}",
+                    "responseId": 681902868,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 50,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681902868"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "修改招聘信息",
+              "api": {
+                "id": "299606396",
+                "method": "post",
+                "path": "/api/recruit/updateRecruit",
+                "parameters": {
+                  "path": [],
+                  "query": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "IfkKkSa79b",
+                      "name": "Authorization",
+                      "required": true,
+                      "description": "",
+                      "example": "",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681910005",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"更新成功\",\"data\":null,\"map\":{}}",
+                    "responseId": 681910005,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "price": {
+                        "type": "integer",
+                        "title": "定价",
+                        "description": "家教的设定加个，多少元/小时"
+                      },
+                      "sch_level": {
+                        "type": "string",
+                        "title": "学校层次",
+                        "description": "想要找到家教的层次，可以为jbw、eyy、syl、yb、eb，分别对应酒吧舞、二幺幺、双一流、一本、二本"
+                      },
+                      "stu_level": {
+                        "type": "string",
+                        "title": "学生水平",
+                        "description": "ABCDE，五档水平"
+                      },
+                      "subject": {
+                        "type": "string",
+                        "title": "科目",
+                        "description": "想要补课的科目"
+                      },
+                      "online": {
+                        "type": "boolean",
+                        "title": "线上",
+                        "description": "线上或者线下的形式，线上是true，线下是false"
+                      },
+                      "detail": {
+                        "type": "string",
+                        "title": "描述细节",
+                        "description": "300字以内的描述细节"
+                      },
+                      "days": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "星期几",
+                        "description": "记录星期几"
+                      },
+                      "time_num": {
+                        "type": "string",
+                        "title": "招聘信息中设置的时间数量",
+                        "description": "有几个时间这个字段就设置成多少"
+                      },
+                      "start_times": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "开始时间",
+                        "description": "记录时间"
+                      },
+                      "end_times": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "结束时间"
+                      },
+                      "recruit_id": {
+                        "type": "string",
+                        "title": "招聘信息编号"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "recruit_id",
+                      "price",
+                      "sch_level",
+                      "stu_level",
+                      "subject",
+                      "online",
+                      "detail",
+                      "time_num",
+                      "days",
+                      "start_times",
+                      "end_times"
+                    ],
+                    "required": [
+                      "price",
+                      "sch_level",
+                      "stu_level",
+                      "subject",
+                      "online",
+                      "detail",
+                      "time_num",
+                      "start_times",
+                      "days",
+                      "end_times",
+                      "recruit_id"
+                    ],
+                    "x-apifox-refs": {}
+                  },
+                  "mediaType": "",
+                  "oasExtensions": "",
+                  "examples": [
+                    {
+                      "value": "{\r\n    \"type\": \"object\",\r\n    \"properties\": {\r\n        \"price\": {\r\n            \"type\": \"integer\",\r\n            \"title\": \"定价\",\r\n            \"description\": \"家教的设定加个，多少元/小时\"\r\n        },\r\n        \"sch_level\": {\r\n            \"type\": \"string\",\r\n            \"title\": \"学校层次\",\r\n            \"description\": \"想要找到家教的层次，可以为jbw、eyy、syl、yb、eb，分别对应酒吧舞、二幺幺、双一流、一本、二本\"\r\n        },\r\n        \"stu_level\": {\r\n            \"type\": \"string\",\r\n            \"title\": \"学生水平\",\r\n            \"description\": \"ABCDE，五档水平\"\r\n        },\r\n        \"subject\": {\r\n            \"type\": \"string\",\r\n            \"title\": \"科目\",\r\n            \"description\": \"想要补课的科目\"\r\n        },\r\n        \"online\": {\r\n            \"type\": \"boolean\",\r\n            \"title\": \"线上\",\r\n            \"description\": \"线上或者线下的形式，线上是true，线下是false\"\r\n        },\r\n        \"detail\": {\r\n            \"type\": \"string\",\r\n            \"title\": \"描述细节\",\r\n            \"description\": \"300字以内的描述细节\"\r\n        },\r\n        \"days\": {\r\n            \"type\": \"array\",\r\n            \"items\": {\r\n                \"type\": \"string\"\r\n            },\r\n            \"title\": \"星期几\",\r\n            \"description\": \"记录星期几\"\r\n        },\r\n        \"time_num\": {\r\n            \"type\": \"string\",\r\n            \"title\": \"招聘信息中设置的时间数量\",\r\n            \"description\": \"有几个时间这个字段就设置成多少\"\r\n        },\r\n        \"start_times\": {\r\n            \"type\": \"array\",\r\n            \"items\": {\r\n                \"type\": \"string\"\r\n            },\r\n            \"title\": \"开始时间\",\r\n            \"description\": \"记录时间\"\r\n        },\r\n        \"end_times\": {\r\n            \"type\": \"array\",\r\n            \"items\": {\r\n                \"type\": \"string\"\r\n            },\r\n            \"title\": \"结束时间\"\r\n        }\r\n    },\r\n    \"x-apifox-orders\": [\r\n        \"price\",\r\n        \"sch_level\",\r\n        \"stu_level\",\r\n        \"subject\",\r\n        \"online\",\r\n        \"detail\",\r\n        \"time_num\",\r\n        \"days\",\r\n        \"start_times\",\r\n        \"end_times\"\r\n    ],\r\n    \"required\": [\r\n        \"price\",\r\n        \"sch_level\",\r\n        \"stu_level\",\r\n        \"subject\",\r\n        \"online\",\r\n        \"detail\",\r\n        \"time_num\",\r\n        \"start_times\",\r\n        \"days\",\r\n        \"end_times\"\r\n    ]\r\n}",
+                      "mediaType": "application/json",
+                      "description": ""
+                    }
+                  ]
+                },
+                "description": "提交招聘信息需要的全部内容，后端更新数据库中的存储",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 60,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681910005"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "删除招聘信息",
+              "api": {
+                "id": "299659390",
+                "method": "post",
+                "path": "/api/recruit/deleteRecruit",
+                "parameters": {
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "1fuDEJG0DE",
+                      "example": "",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "682004339",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVX8BV63WSER15K6F1314A9Q"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVX8BV63WSER15K6F1314A9Q": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"删除成功\",\"data\":null,\"map\":{}}",
+                    "responseId": 682004339,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "recruit_id": {
+                        "type": "integer",
+                        "title": "招聘信息编号"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "recruit_id"
+                    ],
+                    "required": [
+                      "recruit_id"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "给定recruit_id删除对应的招聘信息",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 90,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.682004339"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "上传学生个人信息",
+              "api": {
+                "id": "299637047",
+                "method": "post",
+                "path": "/api/stuInfo/uploadMsg",
+                "parameters": {
+                  "query": []
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681948576",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVW5Z6KA4HX685EVPWHC46DS"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVW5Z6KA4HX685EVPWHC46DS": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"上传成功\",\"data\":null,\"map\":{}}",
+                    "responseId": 681948576,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  },
+                  {
+                    "name": "成功示例2",
+                    "data": "{\"code\":1,\"msg\":\"更新成功！\",\"data\":null,\"map\":{}}",
+                    "responseId": 681948576,
+                    "ordering": 2,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "gender": {
+                        "type": "string",
+                        "description": "M或者F，代表男性和女性",
+                        "title": "性别"
+                      },
+                      "grade": {
+                        "type": "integer",
+                        "title": "年级",
+                        "description": "整型数字"
+                      },
+                      "addr": {
+                        "type": "string",
+                        "title": "地址",
+                        "description": "家庭住址"
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "title": "头像",
+                        "description": "这里应该传的是一个阿里云OSS的链接"
+                      },
+                      "phoneNum": {
+                        "type": "string",
+                        "title": "电话号码"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "gender",
+                      "grade",
+                      "addr",
+                      "phoneNum",
+                      "avatar"
+                    ],
+                    "required": [
+                      "gender",
+                      "grade",
+                      "addr",
+                      "phoneNum",
+                      "avatar"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "上传学生的性别、年级、家庭住址、电话号码、头像，自动将信息存入到数据库中。\n- 如果先前没有数据存入，那么将数据加入到数据库中\n- 如果先前已经有数据存入了，那么更新数据\n",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 70,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681948576"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "获取学生/家长的个人信息",
+              "api": {
+                "id": "299637071",
+                "method": "get",
+                "path": "/api/stuInfo/getStuMsg",
+                "parameters": {
+                  "path": [],
+                  "query": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "3uUvM3g7U6",
+                      "name": "Authorization",
+                      "required": true,
+                      "description": "",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJpZCI6MSwidHlwZSI6InN0dWRlbnQiLCJ1c2VybmFtZSI6InRlc3QifSwiZXhwIjoxNzQ3OTY3Njg1fQ.rbo_uM5EhMtZgu8hZA8ZG5ZvSiBszl7Obh8qPIPe6ho",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681958113",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":null,\"data\":null,\"map\":{}}",
+                    "responseId": 681958113,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  },
+                  {
+                    "name": "成功示例2",
+                    "data": "{\"code\":1,\"msg\":null,\"data\":{\"infoId\":1,\"gender\":\"F\",\"grade\":12,\"addr\":\"西大直街92号\",\"phoneNum\":\"60417615867\",\"avatar\":\"https://avatars.githubusercontent.com/u/50435606\",\"stuId\":1},\"map\":{}}",
+                    "responseId": 681958113,
+                    "ordering": 2,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "get方法，提供token，自动查询对应在stuInfo表中的学生个人信息\n- 如果之前录入过信息，会自动把数据库里存储的信息返回回来\n- 如果之前没有录入过信息，那么直接返回null",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 80,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681958113"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "修改学生/家长个人头像",
+              "api": {
+                "id": "300144933",
+                "method": "post",
+                "path": "/api/stuInfo/updateAvatar",
+                "parameters": {
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "sEdhUr3RsM",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJpZCI6MSwidHlwZSI6InN0dWRlbnQiLCJ1c2VybmFtZSI6InRlc3QifSwiZXhwIjoxNzQ4MDA5NTM5fQ.q-jtY0B2PnBk7-5ZUwiOWnQ8F-rzwI56j25fyTG4p0g",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "682734448",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVYKA7QDG6CDT5G5MWFQC109"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVYKA7QDG6CDT5G5MWFQC109": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"更新成功\",\"data\":null,\"map\":{}}",
+                    "responseId": 682734448,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "avatar": {
+                        "type": "string",
+                        "title": "图像链接",
+                        "description": "图像的oss链接"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "avatar"
+                    ],
+                    "required": [
+                      "avatar"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "上传头像的url，修改头像",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 100,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.682734448"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "依据教师编号获取教师个人信息",
+              "api": {
+                "id": "303237389",
+                "method": "get",
+                "path": "/api/tchInfo/getTchMsgById",
+                "parameters": {
+                  "query": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "T9bdkKfHI3",
+                      "enable": true,
+                      "name": "tchId",
+                      "schema": {
+                        "type": "integer"
+                      }
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "688155784",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "给定编号获取信息",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 110,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.688155784"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "大模型推荐家教老师",
+              "api": {
+                "id": "305021495",
+                "method": "post",
+                "path": "/api/teacher/llmRecommendTeacher",
+                "parameters": {
+                  "path": [],
+                  "query": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "542QLtiDGX",
+                      "name": "Authorization",
+                      "required": true,
+                      "description": "",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJpZCI6MSwidHlwZSI6InN0dWRlbnQiLCJ1c2VybmFtZSI6InRlc3QifSwiZXhwIjoxNzQ5MTczNTMzfQ.iRCMaLGYj89LBifSD6YC7EBcwFicB3EMc_I1qjd8_c0",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "691234780",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "prompt": {
+                        "type": "string",
+                        "title": "提示词",
+                        "description": "一段提示词，用来描述学生的个人情况"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "prompt"
+                    ],
+                    "required": [
+                      "prompt"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 110,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.691234780"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "家教老师",
+          "id": 57372904,
+          "auth": {},
+          "securityScheme": {},
+          "parentId": 0,
+          "serverId": "",
+          "description": "",
+          "identityPattern": {
+            "httpApi": {
+              "type": "inherit",
+              "bodyType": "",
+              "fields": []
+            }
+          },
+          "shareSettings": {},
+          "visibility": "INHERITED",
+          "moduleId": 4459044,
+          "preProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "postProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "inheritPostProcessors": {},
+          "inheritPreProcessors": {},
+          "items": [
+            {
+              "name": "家教老师注册接口",
+              "api": {
+                "id": "299603929",
+                "method": "post",
+                "path": "/api/teacher/register",
+                "parameters": {},
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681893525",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVVWPHRCGXWJTWBAC10W3KDW"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVVWPHRCGXWJTWBAC10W3KDW": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"注册成功\",\"data\":null,\"map\":{}}",
+                    "responseId": 681893525,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  },
+                  {
+                    "name": "异常示例",
+                    "data": "{\"code\":0,\"msg\":\"该用户名已被注册\",\"data\":null,\"map\":{}}",
+                    "responseId": 681893525,
+                    "ordering": 2,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "username": {
+                        "type": "string",
+                        "title": "用户名"
+                      },
+                      "password": {
+                        "type": "string",
+                        "title": "密码"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "username",
+                      "password"
+                    ],
+                    "required": [
+                      "username",
+                      "password"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "家教老师输入用户名和密码完成注册",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 10,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681893525"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "家教老师登录接口",
+              "api": {
+                "id": "299604959",
+                "method": "post",
+                "path": "/api/teacher/login",
+                "parameters": {},
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681908051",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVVWTGSRYD5RBNC19MSKQSSR"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVVWTGSRYD5RBNC19MSKQSSR": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":null,\"data\":\"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJ0eXBlIjoidGVhY2hlciIsInVzZXJuYW1lIjoidGVzdCJ9LCJleHAiOjE3NDc5NjM1MTB9.w7SIyt1iCqr9rsezOvDonmI5a7JEc4NgYfNdVSZgL8I\",\"map\":{}}",
+                    "responseId": 681908051,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  },
+                  {
+                    "name": "异常示例",
+                    "data": "{\"code\":0,\"msg\":\"密码错误，请重新尝试\",\"data\":null,\"map\":{}}",
+                    "responseId": 681908051,
+                    "ordering": 2,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "username": {
+                        "type": "string",
+                        "title": "用户名"
+                      },
+                      "password": {
+                        "type": "string",
+                        "title": "密码"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "username",
+                      "password"
+                    ],
+                    "required": [
+                      "username",
+                      "password"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "输入用户名和密码，完成登录，data字段返回token",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 20,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681908051"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "发布家教应聘信息接口",
+              "api": {
+                "id": "299605236",
+                "method": "post",
+                "path": "/api/recommend/publishRecommend",
+                "parameters": {
+                  "query": [],
+                  "path": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "MBvBdbjAhC",
+                      "name": "Authorization",
+                      "required": true,
+                      "description": "",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJpZCI6MSwidHlwZSI6InRlYWNoZXIiLCJ1c2VybmFtZSI6InRlc3QifSwiZXhwIjoxNzQ4MDIzMjc3fQ.mbmRZuEwlUweZMcPfIclvonjaEwK5FeYEvn5QMPPIXA",
+                      "type": "string",
+                      "enable": true
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681902862",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"成功发布自荐信息\",\"data\":null,\"map\":{}}",
+                    "responseId": 681902862,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "price": {
+                        "type": "integer",
+                        "title": "定价",
+                        "description": "家教的设定加个，多少元/小时"
+                      },
+                      "subject": {
+                        "type": "string",
+                        "title": "科目",
+                        "description": "想要补课的科目"
+                      },
+                      "online": {
+                        "type": "boolean",
+                        "title": "线上",
+                        "description": "线上或者线下的形式，线上是true，线下是false"
+                      },
+                      "detail": {
+                        "type": "string",
+                        "title": "描述细节",
+                        "description": "300字以内的描述细节"
+                      },
+                      "days": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "星期几",
+                        "description": "记录星期几"
+                      },
+                      "time_num": {
+                        "type": "integer",
+                        "title": "招聘信息中设置的时间数量",
+                        "description": "有几个时间这个字段就设置成多少"
+                      },
+                      "start_times": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "开始时间",
+                        "description": "记录时间"
+                      },
+                      "end_times": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "结束时间"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "price",
+                      "subject",
+                      "online",
+                      "detail",
+                      "time_num",
+                      "days",
+                      "start_times",
+                      "end_times"
+                    ],
+                    "required": [
+                      "price",
+                      "subject",
+                      "online",
+                      "detail",
+                      "time_num",
+                      "start_times",
+                      "days",
+                      "end_times"
+                    ],
+                    "x-apifox-refs": {}
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "给定价格、科目、线上/线下，细节和时间相关设定，发布应聘信息",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 30,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681902862"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "获取学生/家长需求列表接口",
+              "api": {
+                "id": "299605404",
+                "method": "get",
+                "path": "/api/recruit/getAllRecruits",
+                "parameters": {
+                  "query": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "kYYhZAt926",
+                      "enable": true,
+                      "name": "pageNum",
+                      "schema": {
+                        "type": "integer"
+                      }
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "6ep6zfVxGg",
+                      "enable": true,
+                      "name": "pageSize",
+                      "schema": {
+                        "type": "integer"
+                      }
+                    }
+                  ],
+                  "path": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "x5hFHFEDra",
+                      "example": "",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681897272",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVXHSXHVFVEENH7J3BKA740M"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVXHSXHVFVEENH7J3BKA740M": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":null,\"data\":[{\"recruit\":{\"recruitId\":1,\"price\":196,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"物理\",\"online\":false,\"detail\":\"adipisicing officia fugiat sit\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":3,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":4,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":5,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":6,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":7,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":8,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":9,\"price\":200,\"schLevel\":\"jbw\",\"stuLevel\":\"A\",\"subject\":\"数学\",\"online\":true,\"detail\":\"consectetur id do fugiat\",\"stuId\":1},\"recruitDates\":null},{\"recruit\":{\"recruitId\":11,\"price\":242,\"schLevel\":\"eyy\",\"stuLevel\":\"C\",\"subject\":\"计算机\",\"online\":false,\"detail\":\"et\",\"stuId\":1},\"recruitDates\":[{\"dateId\":5,\"day\":\"mon\",\"startTime\":\"18:00:00\",\"endTime\":\"20:00:00\",\"recruitId\":11},{\"dateId\":6,\"day\":\"mon\",\"startTime\":\"15:00:00\",\"endTime\":\"17:00:00\",\"recruitId\":11}]}],\"map\":{}}",
+                    "responseId": 681897272,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "get请求方法，获取全部招聘信息",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 40,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681897272"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "获取自己发布的家教应聘信息列表",
+              "api": {
+                "id": "299605987",
+                "method": "get",
+                "path": "/api/recommend/getMyRecommends",
+                "parameters": {
+                  "query": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "sZo8sXUE0F",
+                      "enable": true,
+                      "name": "pageNum",
+                      "schema": {
+                        "type": "integer"
+                      }
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "x8YCQYiF9B",
+                      "enable": true,
+                      "name": "pageSize",
+                      "schema": {
+                        "type": "integer"
+                      }
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "hBDG1JdpTe",
+                      "enable": true,
+                      "name": "subject"
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "TQjxBx1peS",
+                      "enable": true,
+                      "name": "online"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681902713",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVXWHSNMMCF36KEGJWZWPN0V"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVXWHSNMMCF36KEGJWZWPN0V": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":null,\"data\":[{\"recommend\":{\"recommendId\":3,\"price\":200,\"subject\":\"英语\",\"online\":false,\"detail\":\"sit sunt Ut ea Excepteur\",\"tchId\":1},\"recommendDates\":[{\"dateId\":2,\"day\":\"mon\",\"startTime\":\"11:42:58\",\"endTime\":\"22:00:15\",\"recommendId\":3},{\"dateId\":3,\"day\":\"tue\",\"startTime\":\"13:55:36\",\"endTime\":\"21:00:00\",\"recommendId\":3},{\"dateId\":4,\"day\":\"fri\",\"startTime\":\"14:00:00\",\"endTime\":\"23:00:00\",\"recommendId\":3}]}],\"map\":{}}",
+                    "responseId": 681902713,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 50,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681902713"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "修改应聘信息",
+              "api": {
+                "id": "299606342",
+                "method": "post",
+                "path": "/api/recommend/updateRecommend",
+                "parameters": {
+                  "path": [],
+                  "query": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "RjNJk9s3ap",
+                      "name": "Authorization",
+                      "required": true,
+                      "description": "",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJpZCI6MSwidHlwZSI6InRlYWNoZXIiLCJ1c2VybmFtZSI6InRlc3QifSwiZXhwIjoxNzQ4MDIzMjc3fQ.mbmRZuEwlUweZMcPfIclvonjaEwK5FeYEvn5QMPPIXA",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681893481",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVXWETES1THVAR4B3WWJY71Q"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVXWETES1THVAR4B3WWJY71Q": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"更新成功\",\"data\":null,\"map\":{}}",
+                    "responseId": 681893481,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "price": {
+                        "type": "integer",
+                        "title": "定价",
+                        "description": "家教的设定加个，多少元/小时"
+                      },
+                      "subject": {
+                        "type": "string",
+                        "title": "科目",
+                        "description": "想要补课的科目"
+                      },
+                      "online": {
+                        "type": "boolean",
+                        "title": "线上",
+                        "description": "线上或者线下的形式，线上是true，线下是false"
+                      },
+                      "detail": {
+                        "type": "string",
+                        "title": "描述细节",
+                        "description": "300字以内的描述细节"
+                      },
+                      "days": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "星期几",
+                        "description": "记录星期几"
+                      },
+                      "time_num": {
+                        "type": "string",
+                        "title": "招聘信息中设置的时间数量",
+                        "description": "有几个时间这个字段就设置成多少"
+                      },
+                      "start_times": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "开始时间",
+                        "description": "记录时间"
+                      },
+                      "end_times": {
+                        "type": "array",
+                        "items": {
+                          "type": "string"
+                        },
+                        "title": "结束时间"
+                      },
+                      "recommend_id": {
+                        "type": "string",
+                        "title": "自荐编号"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "recommend_id",
+                      "price",
+                      "subject",
+                      "online",
+                      "detail",
+                      "time_num",
+                      "days",
+                      "start_times",
+                      "end_times"
+                    ],
+                    "required": [
+                      "price",
+                      "subject",
+                      "online",
+                      "detail",
+                      "time_num",
+                      "start_times",
+                      "days",
+                      "end_times",
+                      "recommend_id"
+                    ],
+                    "x-apifox-refs": {}
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "重新填写对应字段，修改",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 60,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681893481"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "删除应聘信息",
+              "api": {
+                "id": "301358841",
+                "method": "post",
+                "path": "/api/recommend/deleteRecommend",
+                "parameters": {
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "prGgT9RBT2",
+                      "example": "",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "684916173",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JW8CS7RTFVYF10RJNRCW50WB"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JW8CS7RTFVYF10RJNRCW50WB": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "recommend_id": {
+                        "type": "integer"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "recommend_id"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 90,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.684916173"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "上传家教老师个人信息",
+              "api": {
+                "id": "299628328",
+                "method": "post",
+                "path": "/api/tchInfo/uploadMsg",
+                "parameters": {
+                  "query": [],
+                  "path": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "ePS9wv6hP8",
+                      "name": "Authorization",
+                      "required": true,
+                      "description": "",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJpZCI6MSwidHlwZSI6InRlYWNoZXIiLCJ1c2VybmFtZSI6InRlc3QifSwiZXhwIjoxNzQ3OTY1NTgxfQ.N35n-LUBsNCYpDBxd-seyOdbaYkJIaqc-YTCJVpUOJ0",
+                      "type": "string",
+                      "enable": true
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681939278",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVW3AZ6A2WK1FN5B634PNKKV"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVW3AZ6A2WK1FN5B634PNKKV": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"上传成功\",\"data\":null,\"map\":{}}",
+                    "responseId": 681939278,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  },
+                  {
+                    "name": "成功示例2",
+                    "data": "{\"code\":1,\"msg\":\"更新成功！\",\"data\":null,\"map\":{}}",
+                    "responseId": 681939278,
+                    "ordering": 2,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "gender": {
+                        "type": "string",
+                        "title": "性别",
+                        "description": "只能是M或者F，分别代表男性和女性"
+                      },
+                      "school": {
+                        "type": "string",
+                        "title": "学校",
+                        "description": "填写学校名称"
+                      },
+                      "avatar": {
+                        "type": "string",
+                        "title": "头像",
+                        "description": "是一个阿里云OSS的链接形式"
+                      },
+                      "schLevel": {
+                        "type": "string",
+                        "title": "学校层次",
+                        "description": "jbw、eyy、syl、yb、eb，分别代表酒吧舞、二幺幺、双一流、一本、二本"
+                      },
+                      "eduBg": {
+                        "type": "string",
+                        "title": "教育背景",
+                        "description": "bachelor、master、doctor，分别代表本硕博"
+                      },
+                      "phoneNum": {
+                        "type": "string",
+                        "title": "电话号码"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "gender",
+                      "school",
+                      "schLevel",
+                      "eduBg",
+                      "phoneNum",
+                      "avatar"
+                    ],
+                    "required": [
+                      "gender",
+                      "school",
+                      "schLevel",
+                      "eduBg",
+                      "phoneNum",
+                      "avatar"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "上传家教老师的性别、学校、学校层次、教育背景、电话号码和头像url，从而完成个人基本信息的录入",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 70,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681939278"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "获取家教老师个人信息",
+              "api": {
+                "id": "299632454",
+                "method": "get",
+                "path": "/api/tchInfo/getTchMsg",
+                "parameters": {
+                  "query": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "VcgI1OV3XU",
+                      "enable": true,
+                      "name": "pageNum",
+                      "schema": {
+                        "type": "integer"
+                      },
+                      "example": "2"
+                    },
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "BFcaVV0bhb",
+                      "enable": true,
+                      "name": "pageSize",
+                      "example": "3"
+                    }
+                  ],
+                  "path": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "sqPYD6XcRK",
+                      "name": "Authorization",
+                      "required": true,
+                      "description": "",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJpZCI6MSwidHlwZSI6InRlYWNoZXIiLCJ1c2VybmFtZSI6InRlc3QifSwiZXhwIjoxNzQ3OTY1NTgxfQ.N35n-LUBsNCYpDBxd-seyOdbaYkJIaqc-YTCJVpUOJ0",
+                      "type": "string",
+                      "enable": true
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681959146",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVW4NA73M19HMH3VGSGAYNYK"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVW4NA73M19HMH3VGSGAYNYK": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例1",
+                    "data": "{\"code\":1,\"msg\":null,\"data\":null,\"map\":{}}",
+                    "responseId": 681959146,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  },
+                  {
+                    "name": "成功示例2",
+                    "data": "{\"code\":1,\"msg\":null,\"data\":{\"infoId\":1,\"gender\":\"F\",\"school\":\"哈尔滨工业大学\",\"schLevel\":\"jbw\",\"eduBg\":\"bachelor\",\"phoneNum\":\"09004632247\",\"avatar\":\"https://avatars.githubusercontent.com/u/58246940\",\"tchId\":1},\"map\":{}}",
+                    "responseId": 681959146,
+                    "ordering": 2,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "get方法，提供token，自动查询对应在tchInfo表中的教师个人信息\n- 如果之前录入过信息，会自动把数据库里存储的信息返回回来\n- 如果之前没有录入过信息，那么直接返回null",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 10,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681959146"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "修改家教老师个人头像",
+              "api": {
+                "id": "300152355",
+                "method": "post",
+                "path": "/api/tchInfo/updateAvatar",
+                "parameters": {
+                  "path": [],
+                  "query": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "id": "HrGzxkxnB1",
+                      "name": "Authorization",
+                      "required": true,
+                      "description": "",
+                      "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjbGFpbXMiOnsicGFzc3dvcmQiOiIxMjM0NTYiLCJpZCI6MSwidHlwZSI6InRlYWNoZXIiLCJ1c2VybmFtZSI6InRlc3QifSwiZXhwIjoxNzQ4MDIzMjc3fQ.mbmRZuEwlUweZMcPfIclvonjaEwK5FeYEvn5QMPPIXA",
+                      "type": "string"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "682735811",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVYMP8M0A5H7VCVE7J4V54NN"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVYMP8M0A5H7VCVE7J4V54NN": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [
+                  {
+                    "name": "成功示例",
+                    "data": "{\"code\":1,\"msg\":\"更新成功\",\"data\":null,\"map\":{}}",
+                    "responseId": 682735811,
+                    "ordering": 1,
+                    "description": "",
+                    "oasKey": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "avatar": {
+                        "type": "string",
+                        "title": "头像",
+                        "description": "头像图片的阿里云URL"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "avatar"
+                    ],
+                    "required": [
+                      "avatar"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "上传头像的url，修改头像",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 80,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.682735811"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "依据学生编号获取学生个人信息",
+              "api": {
+                "id": "303275007",
+                "method": "get",
+                "path": "/api/stuInfo/getStuMsgById",
+                "parameters": {
+                  "query": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "integer",
+                      "id": "E1cYUyNPQP",
+                      "enable": true,
+                      "name": "stuId",
+                      "schema": {
+                        "type": "integer"
+                      }
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "h07WTTOgiR",
+                      "example": "",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "688203242",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 100,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.688203242"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "大模型推荐家教学生",
+              "api": {
+                "id": "305031689",
+                "method": "post",
+                "path": "/api/student/llmRecommendStudent",
+                "parameters": {
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "p1yEYE58VE",
+                      "example": "",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "691252472",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "prompt": {
+                        "type": "string",
+                        "title": "提示词",
+                        "description": "家教老师对自己情况的描述"
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "prompt"
+                    ],
+                    "required": [
+                      "prompt"
+                    ]
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 110,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.691252472"
+                ],
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            }
+          ]
+        },
+        {
+          "name": "工具",
+          "id": 57380847,
+          "auth": {},
+          "securityScheme": {},
+          "parentId": 0,
+          "serverId": "",
+          "description": "",
+          "identityPattern": {
+            "httpApi": {
+              "type": "inherit",
+              "bodyType": "",
+              "fields": []
+            }
+          },
+          "shareSettings": {},
+          "visibility": "INHERITED",
+          "moduleId": 4459044,
+          "preProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "postProcessors": [
+            {
+              "id": "inheritProcessors",
+              "type": "inheritProcessors",
+              "data": {}
+            }
+          ],
+          "inheritPostProcessors": {},
+          "inheritPreProcessors": {},
+          "items": [
+            {
+              "name": "上传文件",
+              "api": {
+                "id": "299643550",
+                "method": "post",
+                "path": "/api/file/upload",
+                "parameters": {
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "GjO2MIkn9c",
+                      "example": "",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "681958226",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {},
+                      "x-apifox-orders": [
+                        "01JVW8V9N8XH0BHM5P9501DDKV"
+                      ],
+                      "required": [],
+                      "x-apifox-refs": {
+                        "01JVW8V9N8XH0BHM5P9501DDKV": {
+                          "$ref": "#/definitions/170390029"
+                        }
+                      }
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "multipart/form-data",
+                  "parameters": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "file",
+                      "id": "IgBaSaGLDB",
+                      "example": "",
+                      "enable": true,
+                      "name": "file"
+                    }
+                  ],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {}
+                  },
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "上传一个文件，返回一个阿里云oss上的url",
+                "tags": [],
+                "status": "testing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 10,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.681958226"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "LLM阻塞调用接口",
+              "api": {
+                "id": "304458805",
+                "method": "post",
+                "path": "/api/llm/chat",
+                "parameters": {
+                  "query": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "nzYjOP5LQ3",
+                      "enable": true,
+                      "name": "prompt",
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "XkzCejDAFn",
+                      "example": "",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "690269621",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "json",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "none",
+                  "parameters": [],
+                  "mediaType": "",
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 20,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.690269621"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            },
+            {
+              "name": "LLM流式调用接口",
+              "api": {
+                "id": "304479445",
+                "method": "post",
+                "path": "/api/llm/stream",
+                "parameters": {
+                  "query": [],
+                  "path": [],
+                  "cookie": [],
+                  "header": [
+                    {
+                      "required": false,
+                      "description": "",
+                      "type": "string",
+                      "id": "MzE1ZrYBOp",
+                      "example": "",
+                      "enable": true,
+                      "name": "Authorization"
+                    }
+                  ]
+                },
+                "auth": {},
+                "securityScheme": {},
+                "commonParameters": {
+                  "query": [],
+                  "body": [],
+                  "cookie": [],
+                  "header": []
+                },
+                "responses": [
+                  {
+                    "id": "690315262",
+                    "code": 200,
+                    "name": "成功",
+                    "headers": [],
+                    "jsonSchema": {
+                      "type": "object",
+                      "properties": {}
+                    },
+                    "description": "",
+                    "contentType": "html",
+                    "mediaType": "",
+                    "oasExtensions": ""
+                  }
+                ],
+                "responseExamples": [],
+                "requestBody": {
+                  "type": "application/json",
+                  "parameters": [],
+                  "jsonSchema": {
+                    "type": "object",
+                    "properties": {
+                      "01JXH8EGZF3C73HVH8BWF17MEM": {
+                        "x-tmp-pending-properties": true
+                      }
+                    },
+                    "x-apifox-orders": [
+                      "01JXH8EGZF3C73HVH8BWF17MEM"
+                    ],
+                    "required": [
+                      "01JXH8EGZF3C73HVH8BWF17MEM"
+                    ]
+                  },
+                  "mediaType": "",
+                  "examples": [
+                    {
+                      "value": "[\r\n  {\r\n    \"role\": \"user\",\r\n    \"content\": \"你好，你是谁？\"\r\n  },\r\n  {\r\n    \"role\": \"assistant\",\r\n    \"content\": \"我是一个由 Spring AI 驱动的大语言模型助手。\"\r\n  },\r\n  {\r\n    \"role\": \"user\",\r\n    \"content\": \"用 Java 写一个快速排序算法\"\r\n  }\r\n]\r\n",
+                      "mediaType": "application/json",
+                      "description": ""
+                    }
+                  ],
+                  "oasExtensions": ""
+                },
+                "description": "",
+                "tags": [],
+                "status": "developing",
+                "serverId": "",
+                "operationId": "",
+                "sourceUrl": "",
+                "ordering": 30,
+                "cases": [],
+                "mocks": [],
+                "customApiFields": "{}",
+                "advancedSettings": {
+                  "disabledSystemHeaders": {}
+                },
+                "mockScript": {},
+                "codeSamples": [],
+                "commonResponseStatus": {},
+                "responseChildren": [
+                  "BLANK.690315262"
+                ],
+                "maintainer": "bin",
+                "visibility": "INHERITED",
+                "moduleId": 4459044,
+                "oasExtensions": "",
+                "preProcessors": [],
+                "postProcessors": [],
+                "inheritPostProcessors": {},
+                "inheritPreProcessors": {}
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "socketCollection": [],
+  "docCollection": [],
+  "webSocketCollection": [],
+  "socketIOCollection": [],
+  "responseCollection": [
+    {
+      "_databaseId": 6709953,
+      "updatedAt": "2025-05-22T11:06:54.000Z",
+      "name": "根目录",
+      "type": "root",
+      "children": [],
+      "moduleId": 4459044,
+      "parentId": 0,
+      "id": 6709953,
+      "ordering": [],
+      "items": []
+    }
+  ],
+  "schemaCollection": [
+    {
+      "id": 14485370,
+      "name": "根目录",
+      "visibility": "SHARED",
+      "moduleId": 4459044,
+      "items": [
+        {
+          "name": "R",
+          "displayName": "",
+          "id": "#/definitions/170390029",
+          "description": "后端向前端返回的json格式",
+          "schema": {
+            "jsonSchema": {
+              "type": "object",
+              "properties": {
+                "code": {
+                  "type": "integer",
+                  "title": "编码",
+                  "description": "1代表请求成功，0代表请求失败"
+                },
+                "msg": {
+                  "type": [
+                    "string",
+                    "null"
+                  ],
+                  "title": "信息",
+                  "description": "对返回结果的一些描述性信息"
+                },
+                "data": {
+                  "type": [
+                    "string",
+                    "integer",
+                    "boolean",
+                    "array",
+                    "object",
+                    "number",
+                    "null"
+                  ],
+                  "title": "数据",
+                  "description": "对于需要获取数据类的请求，所申请获取的数据从这个字段获得"
+                },
+                "map": {
+                  "type": [
+                    "object",
+                    "null"
+                  ],
+                  "properties": {},
+                  "x-apifox-orders": [],
+                  "title": "动态数据",
+                  "description": "一些额外的数据可能会从这个字段返回"
+                }
+              },
+              "x-apifox-orders": [
+                "code",
+                "msg",
+                "data",
+                "map"
+              ],
+              "required": [
+                "code",
+                "msg",
+                "data",
+                "map"
+              ]
+            }
+          },
+          "visibility": "INHERITED",
+          "moduleId": 4459044
+        },
+        {
+          "name": "招聘信息",
+          "displayName": "",
+          "id": "#/definitions/170473258",
+          "description": "",
+          "schema": {
+            "jsonSchema": {
+              "type": "object",
+              "properties": {
+                "price": {
+                  "type": "integer",
+                  "title": "定价",
+                  "description": "家教的设定加个，多少元/小时"
+                },
+                "sch_level": {
+                  "type": "string",
+                  "title": "学校层次",
+                  "description": "想要找到家教的层次，可以为jbw、eyy、syl、yb、eb，分别对应酒吧舞、二幺幺、双一流、一本、二本"
+                },
+                "stu_level": {
+                  "type": "string",
+                  "title": "学生水平",
+                  "description": "ABCDE，五档水平"
+                },
+                "subject": {
+                  "type": "string",
+                  "title": "科目",
+                  "description": "想要补课的科目"
+                },
+                "online": {
+                  "type": "boolean",
+                  "title": "线上",
+                  "description": "线上或者线下的形式，线上是true，线下是false"
+                },
+                "detail": {
+                  "type": "string",
+                  "title": "描述细节",
+                  "description": "300字以内的描述细节"
+                },
+                "days": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "title": "星期几",
+                  "description": "记录星期几"
+                },
+                "time_num": {
+                  "type": "string",
+                  "title": "招聘信息中设置的时间数量",
+                  "description": "有几个时间这个字段就设置成多少"
+                },
+                "start_times": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "title": "开始时间",
+                  "description": "记录时间"
+                },
+                "end_times": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "title": "结束时间"
+                }
+              },
+              "x-apifox-orders": [
+                "price",
+                "sch_level",
+                "stu_level",
+                "subject",
+                "online",
+                "detail",
+                "time_num",
+                "days",
+                "start_times",
+                "end_times"
+              ],
+              "required": [
+                "price",
+                "sch_level",
+                "stu_level",
+                "subject",
+                "online",
+                "detail",
+                "time_num",
+                "start_times",
+                "days",
+                "end_times"
+              ]
+            }
+          },
+          "visibility": "INHERITED",
+          "moduleId": 4459044
+        }
+      ]
+    }
+  ],
+  "securitySchemeCollection": [
+    {
+      "id": 1147915,
+      "name": "根目录",
+      "items": [],
+      "ordering": []
+    }
+  ],
+  "requestCollection": [
+    {
+      "name": "根目录",
+      "children": [],
+      "ordering": [
+        "requestFolder.6815696"
+      ],
+      "items": []
+    }
+  ],
+  "apiTestCaseCollection": [
+    {
+      "name": "Root",
+      "children": [],
+      "items": []
+    }
+  ],
+  "testCaseReferences": [],
+  "environments": [],
+  "commonScripts": [],
+  "databaseConnections": [],
+  "globalVariables": [],
+  "commonParameters": null,
+  "projectSetting": {
+    "id": "6470816",
+    "auth": {},
+    "securityScheme": {},
+    "servers": [
+      {
+        "id": "default",
+        "name": "默认服务"
+      }
+    ],
+    "gateway": [],
+    "language": "zh-CN",
+    "apiStatuses": [
+      "developing",
+      "testing",
+      "released",
+      "deprecated"
+    ],
+    "mockSettings": {},
+    "preProcessors": [],
+    "postProcessors": [],
+    "advancedSettings": {
+      "enableJsonc": false,
+      "enableBigint": false,
+      "responseValidate": true,
+      "enableTestScenarioSetting": false,
+      "enableYAPICompatScript": false,
+      "isDefaultUrlEncoding": 2,
+      "publishedDocUrlRules": {
+        "defaultRule": "RESOURCE_KEY_ONLY",
+        "resourceKeyStandard": "NEW"
+      }
+    },
+    "initialDisabledMockIds": [],
+    "cloudMock": {
+      "security": "free",
+      "enable": false,
+      "tokenKey": "apifoxToken"
+    }
+  },
+  "customFunctions": [],
+  "projectAssociations": []
+}
